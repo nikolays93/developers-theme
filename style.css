@@ -1,0 +1,164 @@
+/*!
+Theme Name: WP dev's theme
+Based Theme URI: http://underscores.me/
+Author: NikolayS93
+Author URI: //vk.com/nikolays_93
+Description: Starter page for cool developers based underscore.
+Version: 1.2.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: seo18theme
+Tags: Start, Bootstrap
+*/
+//
+// Vnimanie! Warning! Achtung!
+//
+// Dlya compilyacii etogo faila: zaidite pod administratorom i obnovite lubuu front stranicu
+//
+
+// * Imports
+// * Header
+// * Navigations
+// * Sides
+// * Posts and pages
+// * Footer
+// * Woocommerce
+// * Content
+
+// * Imports
+// 
+// be care - its not compass
+@import "bs4scss/_mixins.scss";
+@import "bs4scss/_custom.scss";
+@import "_defaults.scss";
+
+// * Header
+
+// * Navigations
+.navbar-default {
+  width: 100%; // sticky fix
+  background-color: #ccc;
+  margin-bottom: 20px;
+  padding: 0;
+  border-radius: 0;
+  .navbar-brand,
+  .navbar-toggler {
+    @include hover-focus {
+      color: #000;
+    }
+  }
+  .navbar-toggler {
+    background-image: none;
+    border-color: #000;
+    .icon-bar {
+      background-color: #888;
+      display: block;
+      width: 100%;
+      height: 2px;
+      border-radius: 1px;
+      margin: 2px 0 5px;
+    }
+  }
+  .navbar-nav {
+    .nav-item+.nav-item {
+      margin-left: 0;
+    }   
+    .nav-link {
+      padding: 10px 15px;
+      @include hover-focus() {
+        color: lighten(#000, 20%);
+      }
+    }
+    .current-menu-ancestor > .nav-link,
+    .active > .nav-link,
+    .nav-link.active {}
+
+    .open > .nav-link,
+    .nav-link.open {
+      @include hover-focus() {
+        color: darken(#ccc, 20%);
+      }
+    }
+  }
+
+  .dropdown-menu {
+    left: 0;
+    margin-top: 0;
+    .dropdown-item {
+      padding: 3px 1.5rem;
+      color: #000;
+
+      @include hover-focus {
+        color: #000;
+        text-decoration: none;
+        background-color: transparent;
+      }
+
+      &.active {
+        @include plain-hover-focus {
+          color: #000;
+          text-decoration: none;
+          background-color: #ddd;
+        }
+      }
+    }
+  }
+}
+
+// * Sides
+
+// * Posts and pages
+
+// * Footer
+
+// * Woocommerce
+.row.products {
+  @include clear-list(0);
+  .first {
+    clear: both;
+  }
+
+  // thumbnail
+  .product-thumbnail {
+    background-size: cover;
+    background-position: center;
+    height: 200px;
+    .onsale {
+      position: absolute;
+      left: 5%;
+      top: 1rem;
+      line-height: 16px;
+    }
+  }
+  .cat-thumbnail {
+    background-size: cover;
+    background-position: center;
+    height: 200px;
+  }
+  .card > a, .card-block > a:first-child {
+    @include plain-hover-focus() {
+      text-decoration: none;
+      color: #000;
+    }
+  }
+}
+
+.single-product {
+  #secondary {
+    position: relative;
+    .onsale { position: absolute; left: 5%; top: 10px; }
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+    .thumbnails {
+      margin: 10px -5px;
+      > a {
+        display: block;
+        padding-left: 5px;
+        padding-right: 5px;
+      }
+    }
+  }
+}
+// * Content
