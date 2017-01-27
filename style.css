@@ -117,12 +117,15 @@ Tags: Start, Bootstrap
   .first {
     clear: both;
   }
-
-  // thumbnail
+  .card {
+    margin-bottom: 20px;
+  }
+  
+  // product
   .product-thumbnail {
-    background-size: cover;
+    background-repeat: no-repeat;
     background-position: center;
-    height: 200px;
+    height: 120px;
     .onsale {
       position: absolute;
       left: 5%;
@@ -130,11 +133,20 @@ Tags: Start, Bootstrap
       line-height: 16px;
     }
   }
-  .cat-thumbnail {
-    background-size: cover;
-    background-position: center;
-    height: 200px;
+  
+  .product-category {
+    .cat-thumbnail {
+      background-repeat: no-repeat;
+      background-position: center;
+      height: 150px;
+      // float: left;
+      // width: 150px;
+    }
+    h3 {
+      // title
+    }
   }
+  
   .card > a, .card-block > a:first-child {
     @include plain-hover-focus() {
       text-decoration: none;
