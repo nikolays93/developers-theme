@@ -17,17 +17,13 @@ $thumbnail_url = ($thumbnail_id != 0) ?
 	<div class="card">
 		<?php woocommerce_template_loop_category_link_open($category); ?>
 			<div class="cat-thumbnail" style="background-image: url(<?=$thumbnail_url?>);"></div>
+			<div class="card-block">
+				<?php
+				do_action( 'woocommerce_shop_loop_subcategory_title', $category );
+				// empty hook
+				do_action( 'woocommerce_after_subcategory_title', $category );
+				?>
+			</div><!-- .card-block -->
 		<?php woocommerce_template_loop_category_link_close($category); ?>
-		<div class="card-block">
-			<?php
-			woocommerce_template_loop_category_link_open($category);
-
-			do_action( 'woocommerce_shop_loop_subcategory_title', $category );
-
-			// empty hook
-			do_action( 'woocommerce_after_subcategory_title', $category );
-
-			woocommerce_template_loop_category_link_close($category); ?>
-		</div><!-- .card-block -->
 	</div><!-- .card -->
 </li>

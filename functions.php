@@ -72,6 +72,17 @@ add_action( 'widgets_init', 'archive_widgets_init' );
  * Enqueue scripts and styles.
  */
 function seo18theme_addComponents() {
+
+	// get jQuery
+ 	// wp_deregister_script( 'jquery' );
+	// wp_register_script( 'jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js');
+	wp_enqueue_script('jquery');
+    
+    // get bootstrap
+    wp_enqueue_style('bootstrap', get_template_directory_uri() . '/bootstrap.css',array(),'a6nikolays93');
+    // wp_enqueue_script('Tether', 'https://www.atlasestateagents.co.uk/javascript/tether.min.js');
+    // wp_enqueue_script('bootstrap-script', get_template_directory_uri() . '/assets/js/bootstrap.min.js');
+    // 
 	$scss_cache = get_theme_mod( 'use_scss' );
 
 	if(empty($scss_cache)){
@@ -105,18 +116,6 @@ function seo18theme_addComponents() {
 		} // is user admin
 		wp_enqueue_style('scss-style', get_template_directory_uri() . $out_file, array(), $scss_cache, 'all');
 	} // is use scss
-
-	
-
-    // get jQuery
-    wp_deregister_script( 'jquery' );
-	wp_register_script( 'jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js');
-    wp_enqueue_script('jquery');
-    
-    // get bootstrap
-    wp_enqueue_style('bootstrap', get_template_directory_uri() . '/bootstrap.css',array(),'a6nikolays93');
-    // wp_enqueue_script('Tether', 'https://www.atlasestateagents.co.uk/javascript/tether.min.js');
-    // wp_enqueue_script('bootstrap-script', get_template_directory_uri() . '/assets/js/bootstrap.min.js');
 
     // get scripts
     
