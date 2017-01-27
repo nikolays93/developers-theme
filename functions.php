@@ -99,10 +99,11 @@ function seo18theme_addComponents() {
 				if(!empty($compiled)){
 					file_put_contents(get_template_directory().$out_file, $compiled );
 					set_theme_mod( 'use_scss', filemtime($file) );
+					$scss_cache = filemtime($file);
 				}
 			}
 		} // is user admin
-		wp_enqueue_style('scss-style', get_template_directory_uri() . $out_file, array(), '1.0', 'all');
+		wp_enqueue_style('scss-style', get_template_directory_uri() . $out_file, array(), $scss_cache, 'all');
 	} // is use scss
 
 	
