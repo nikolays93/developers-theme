@@ -27,18 +27,7 @@ jq(function( $ ) {
 
     $( '#get-product' ).on('click', function(){
       var title = $('.product_title').text();
-      // var params = '';
-      // var n = 1;
-      // $('.variations tr').each(function(i){
-      //   var key = $('label', this).text();
-      //   var $val = $('select option:selected', this);
-      //   if ($val.val() != 'undefined' && $val.val() != ''){
-      //     params+= n+'. '+key+': '+$val.text()+'.\n';
-      //     n++;
-      //   }
-      // });
       $( '[name="your-message"]' ).val( 'Доброго времени суток, хочу приобрести '+title+'. \n\nПожалуйста, перезвоните мне.');
-      //\n\n Выбраные параметры:\n'+params )
     });
 
     // end on.load
