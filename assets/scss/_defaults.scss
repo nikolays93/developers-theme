@@ -78,6 +78,7 @@
 img { max-width: 100%; height: auto; }
 img.full { max-width: auto !important; }
 
+.no-underline { @include plain-hover-focus(){ text-decoration: none; } }
 .fll { float: left; }
 .flr { float: right; }
 .mb10 { margin-bottom: 10px; }
