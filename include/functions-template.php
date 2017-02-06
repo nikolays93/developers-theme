@@ -146,18 +146,18 @@ function get_advanced_title(
       return $title . $edit_tpl;
 
     if( $force_single || is_singular() ){
-      return  '<h1>'. $title . $edit_tpl .'</h1>';
+      return  '<h1 class="post-title">'. $title . $edit_tpl .'</h1>';
     }
     else {
-      return '<a href="'. get_permalink() .'"><h2>'.$title.$edit_tpl.'</h2></a>';
+      return '<a href="'. get_permalink() .'"><h2 class="post-title">'.$title.$edit_tpl.'</h2></a>';
     }
   }
   // Если все же не удалось получить title
   return false;
 }
 function the_advanced_title(
-  $before = '<header class="entry-header">',
-  $after = '</header><!-- .entry-header -->',
+  $before = '',
+  $after = '',
   $post_id = null,
   $clear = false,
   $force_single = false
@@ -217,12 +217,12 @@ function get_template_archive_title() {
   return $title;
 }
 function the_template_archive_title(
-  $before='<header class="archive-header">',
-  $after='</header>') {
+  $before='',
+  $after='') {
 
   $title = get_template_archive_title();
   if(!empty($title)){
-    echo $before .'<h1>'. $title .'</h1>'. $after;
+    echo $before .'<h1 class="archive-title">'. $title .'</h1>'. $after;
     return true;
   }
   return false;
@@ -445,34 +445,3 @@ if(is_admin()){
     }
     add_filter('admin_footer_text', 'custom_admin_footer');
 }
-
-
-/*
- * in future
- * 
- ****************************************
- // ИзСменить […] на Подробнее &raquo;
-function seo18_excerpt_more( $more ) {
-  global $post;
-  return '...  <a href="'. get_permalink($post->ID) . '" class="more-link" title="Читать '.get_the_title($post->ID).'">Подробнее &raquo;</a>';
-}
-add_filter('excerpt_more', 'seo18_excerpt_more');
-
-// Prints HTML with meta information for the categories, tags and comments.
-function entry_footer() {
-  // Hide category and tag text for pages.
-  if ( 'post' === get_post_type() ) {
-    /* translators: used between list items, there is a space after the comma 
-    $categories_list = get_the_category_list( esc_html__( ', ', 'seo18theme' ) );
-    if ( $categories_list ) {
-      printf( '<span class="cat-links">' . esc_html__( 'Posted in %1$s', 'seo18theme' ) . '</span>', $categories_list ); // WPCS: XSS OK.
-    }
-
-    /* translators: used between list items, there is a space after the comma 
-    $tags_list = get_the_tag_list( '', esc_html__( ', ', 'seo18theme' ) );
-    if ( $tags_list ) {
-      printf( '<span class="tags-links">' . esc_html__( 'Tagged %1$s', 'seo18theme' ) . '</span>', $tags_list ); // WPCS: XSS OK.
-    }
-  }
-}
-*/
