@@ -137,18 +137,18 @@ function get_advanced_title(
   if(empty($title))
     $title = get_the_title($post_id);
 
+  $edit_link = get_edit_post_link($post_id);
+  $edit_class = 'dashicons dashicons-welcome-write-blog no-underline';
+  $edit_tpl = ' <object><a style="position: absolute;" class="'.$edit_class.'" href="' . $edit_link . '"></a></object>';
+
   if(!empty($title)){
     if($clear)
-      return $title;
+      return $title . $edit_tpl;
 
     if( $force_single || is_singular() ){
-      return  '<h1>'. $title .'</h1>';
+      return  '<h1>'. $title . $edit_tpl .'</h1>';
     }
     else {
-      $edit_link = get_edit_post_link($post_id);
-      $edit_class = 'dashicons dashicons-welcome-write-blog no-underline';
-      $edit_tpl = ' <object><a class="'.$edit_class.'" href="' . $edit_link . '"></a></object>';
-
       return '<a href="'. get_permalink() .'"><h2>'.$title.$edit_tpl.'</h2></a>';
     }
   }
@@ -305,31 +305,6 @@ function get_parent_page_id($post) {
   }
   return $parent;
 }
-
-/**
- * Добавить шорткод [CODE] который, <br>
- * отключает woordpress форматирование [/CODE]
- */
-  // Функция не стабильна с wooCommerce !
-  // function unmarkedCode($content) {
-  //     $new_content = '';
-  //     $pattern_full = '{(\[CODE\].*?\[/CODE\])}is';
-  //     $pattern_contents = '{\[CODE\](.*?)\[/CODE\]}is';
-  //     $pieces = preg_split($pattern_full, $content, -1, PREG_SPLIT_DELIM_CAPTURE);
-
-  //     foreach ($pieces as $piece) {
-  //            if (preg_match($pattern_contents, $piece, $matches)) {
-  //                    $new_content .= $matches[1];
-  //            } else {
-  //                    $new_content .= wptexturize(wpautop($piece));
-  //            }
-  //     }
-
-  //     return $new_content;
-  //     }
-  //     remove_filter('the_content', 'wpautop');
-  //     remove_filter('the_content', 'wptexturize');
-  //     add_filter('the_content', 'unmarkedCode', 99);
 
 /**
  * Отчистить мета теги
