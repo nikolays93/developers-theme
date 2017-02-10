@@ -131,3 +131,13 @@ function wc_wc20_variation_price_format( $price, $product ) {
 	}
 	add_filter( 'woocommerce_variable_sale_price_html', 'wc_wc20_variation_price_format', 10, 2 );
 	add_filter( 'woocommerce_variable_price_html', 'wc_wc20_variation_price_format', 10, 2 );
+
+function change_label_post_object() {
+	global $wp_post_types;
+	$wp_post_types['product']->label = 'Каталог';
+	$labels = &$wp_post_types['product']->labels;
+	// $labels->name = 'Продукция';
+	// $labels->singular_name = 'Товар';
+	}
+
+	add_action( 'init', 'change_label_post_object' );
