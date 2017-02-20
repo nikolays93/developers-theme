@@ -17,6 +17,7 @@ function change_currency_symbol( $currency_symbol, $currency ) {
 
 // Определяем сетку вывода товара
 function wp_woo_shop_columns( $columns ) {
+	// todo: запилить в настройки плагина
 	// На главной витрине
 		// if(is_shop() && !is_search())
 		// 	return 4;
@@ -41,9 +42,14 @@ function customize_per_page($cols){
 
 // Вносим изменения в табы
 function woo_change_tabs( $tabs ) {
-	$tabs['description']['title'] = 'Описание товара';
-	unset( $tabs['reviews'] );
-	unset( $tabs['additional_information'] );
+	if(isset($tabs['description']))
+		$tabs['description']['title'] = 'Описание товара';
+
+	if(isset($tabs['reviews']))
+		unset( $tabs['reviews'] );
+
+	if(isset($tabs['additional_information']))
+		unset( $tabs['additional_information'] );
 
 	return $tabs;
 	}
@@ -113,15 +119,22 @@ function init_woocommerce_sidebar(){
 
 // Используем формат цены вариативного товара WC 2.0
 function wc_wc20_variation_price_format( $price, $product ) {
-    // Основная цена
-    $prices = array( $product->get_variation_price( 'min', true ), $product->get_variation_price( 'max', true ) );
-    $price = $prices[0] !== $prices[1] ? sprintf( __( 'от %1$s', 'woocommerce' ), wc_price( $prices[0] ) ) : wc_price( $prices[0] );
-    // Цена со скидкой
-    $prices = array( $product->get_variation_regular_price( 'min', true ), $product->get_variation_regular_price( 'max', true ) );
-    sort( $prices );
-    $saleprice = $prices[0] !== $prices[1] ? sprintf( __( 'от %1$s', 'woocommerce' ), wc_price( $prices[0] ) ) : wc_price( $prices[0] );
-
+    $prices = array(
+    	$product->get_variation_price( 'min', true ),
+    	$product->get_variation_price( 'max', true )
+    	);
     
+    $price = wc_price( $prices[0] );
+    if($prices[0] !== $prices[1])
+    	$price = 'от ' . $price;
+
+    $prices = array(
+    	$product->get_variation_regular_price( 'min', true ),
+    	$product->get_variation_regular_price( 'max', true )
+    	);
+    $saleprice = wc_price( $prices[0] );
+    if( $prices[0] !== $prices[1] )
+    	$saleprice = 'от ' . $saleprice;
 
     if ( $price !== $saleprice ) {
         $price = '<del>' . $saleprice . '</del> <ins>' . $price . '</ins>';
@@ -132,7 +145,7 @@ function wc_wc20_variation_price_format( $price, $product ) {
 	add_filter( 'woocommerce_variable_sale_price_html', 'wc_wc20_variation_price_format', 10, 2 );
 	add_filter( 'woocommerce_variable_price_html', 'wc_wc20_variation_price_format', 10, 2 );
 
-function change_label_post_object() {
+function change_product_label() {
 	global $wp_post_types;
 	$wp_post_types['product']->label = 'Каталог';
 	$labels = &$wp_post_types['product']->labels;
@@ -140,4 +153,4 @@ function change_label_post_object() {
 	// $labels->singular_name = 'Товар';
 	}
 
-	add_action( 'init', 'change_label_post_object' );
+	add_action( 'init', 'change_product_label' );

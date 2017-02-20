@@ -178,4 +178,10 @@ Tags: Start, Bootstrap
     }
   }
 }
+@media (min-width: 1200px){
+  .row.small {
+    padding-left: 100px;
+    padding-right: 100px;
+  }
+}
 // * Content
