@@ -14,12 +14,9 @@
  * Добавить ссылку о разработчике в топбар
  * Сменить строку "Спасибо за творчество с Wordpress"
  */
+if ( ! defined( 'ABSPATH' ) )    exit; // Exit if accessed directly
 
 if(WP_DEBUG){
-  if ( ! defined( 'ABSPATH' ) ) {
-    exit; // Exit if accessed directly
-  }
-
   function _dump($var){
     echo '<style>
     #dump {
@@ -48,6 +45,7 @@ if(WP_DEBUG){
     return false;
   }
 }
+function _d($var){ _dump($var); }
 
 /**
  * Информация о компании (из customizer'а)
@@ -65,32 +63,34 @@ function get_company_info($field){
 }
 add_shortcode('company', 'get_company_info');
 
-function get_logotype($img_only = false){
-  if(!$img_only)
-    $logotype = '<h1>'.get_bloginfo('name').'</h1>';
-  else
-    $logotype = false;
-
+function get_logotype($responsive_img = false){
+  $logotype = false;
   $urls = array(
     'png' => dirname(__FILE__) . '/../img/logotype.png',
     'jpg' => dirname(__FILE__) . '/../img/logotype.jpg'
     );
   foreach ($urls as $type => $url) {
     if(is_file($url) && is_readable($url)){
-      $logotype= '<img src="'.get_template_directory_uri().'/img/logotype.'.$type.'" alt="'.get_bloginfo('name').'" />';
+      $class = $responsive_img ? ' class="full"' : '';
+      $url = get_template_directory_uri().'/img/logotype.'.$type;
+      $alt = get_bloginfo('name');
+      
+      $logotype = "<img{$class} src='{$url}' alt='{$alt}' />";
     }
   }
   return $logotype;
 }
 
-function the_logotype($link = false){
+function the_logotype($clear = false){
   $logotype = get_logotype();
-  if($link)
-    $out= '<a class="image-brand" title="'.get_bloginfo('description').'" href="'.get_home_url().'">'.
-    $logotype.
-    '</a>';
-  else
-    $out=$logotype;
+  if($clear){
+    $out = '<a class="image-brand" title="Перейти на главную" href="'.get_home_url().'">';
+    $out .= $logotype;
+    $out .= '</a>';
+  }
+  else {
+    $out = $logotype;
+  }
 
   echo $out;
 }

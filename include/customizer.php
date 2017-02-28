@@ -1,7 +1,7 @@
 <?php
 
 class themeCustomizer {
-  public $viewport = 1200;
+  public $viewport = 1170;
   public $w_paddings = 15;
 
   public static $fonts_exist = array(
