@@ -21,7 +21,7 @@
 			</div><!--.row head-info-->
 		</div>
 	<?php // <!-- =8<== --> ?>
-		<nav class="navbar navbar-default navbar-toggleable-md navbar-light bg-faded">
+		<nav class="navbar navbar-default navbar-toggleable-md">
 			<div class="container">
 				<?php do_action('main_menu_template'); ?>
 			</div>

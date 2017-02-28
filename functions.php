@@ -104,6 +104,7 @@ function seo18theme_addComponents() {
 	else {
 
 		$out_file = is_wp_debug() ? '/assets/style.css' : '/assets/style.min.css';
+		
 		$role = isset(wp_get_current_user()->roles[0]) ? wp_get_current_user()->roles[0] : '';
 		if($role == 'administrator'){
 			$file = get_template_directory() . '/style.css';
@@ -117,7 +118,7 @@ function seo18theme_addComponents() {
 					return get_template_directory() . '/assets/scss/'.$path;
 				});
 
-				if(is_wp_debug())
+				if(!is_wp_debug())
 					$scss->setFormatter('scss_formatter_compressed');
 				
 				$compiled = $scss->compile( file_get_contents($file) );
