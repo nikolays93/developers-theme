@@ -2,43 +2,21 @@
 
 // Добавляем поддержку WooCommerce
 function woocommerce_support() {
-    add_theme_support( 'woocommerce' );
+	add_theme_support( 'woocommerce' );
 	}
-	add_action( 'after_setup_theme', 'woocommerce_support' );
+add_action( 'after_setup_theme', 'woocommerce_support' );
 
 // Меняем символ рубля (так как он работает не корректно на некоторых системах)
 function change_currency_symbol( $currency_symbol, $currency ) {
-	$options = get_option( 'dp_options' );
 	if( $currency == 'RUB' ){
-		return !empty( $options['FontAwesome'] ) ? '<i class="fa fa-rub"></i>' : 'р.';
+		if( defined(DT_PLUGIN_NAME) && $opt = get_option( DT_PLUGIN_NAME ) ){
+			if(! empty( $opt['FontAwesome'] ) )
+				return '<i class="fa fa-rub"></i>';
+		}
+		return 'Р.';
 	}
 	}
-	add_filter('woocommerce_currency_symbol', 'change_currency_symbol', 10, 2);
-
-// Определяем сетку вывода товара
-function wp_woo_shop_columns( $columns ) {
-	// todo: запилить в настройки плагина
-	// На главной витрине
-		// if(is_shop() && !is_search())
-		// 	return 4;
-
-	// если на странице есть категории
-		// if(has_product_cat())
-		// 	return 4;
-
-	// В остальных случаях
-	return 4;
-	}
-	add_filter( 'loop_shop_columns', 'wp_woo_shop_columns' );
-
-// Количество товаров на странице
-function customize_per_page($cols){
-	if(wp_is_mobile())
-		return 8;
-	else
-		return 16;
-	}
-	add_filter( 'loop_shop_per_page', 'customize_per_page', 20 );
+add_filter('woocommerce_currency_symbol', 'change_currency_symbol', 10, 2);
 
 // Вносим изменения в табы
 function woo_change_tabs( $tabs ) {
@@ -53,55 +31,16 @@ function woo_change_tabs( $tabs ) {
 
 	return $tabs;
 	}
-	add_filter( 'woocommerce_product_tabs', 'woo_change_tabs', 98 );
+add_filter( 'woocommerce_product_tabs', 'woo_change_tabs', 98 );
 
-// количество товаров в категории
-function woo_remove_category_products_count() {
-    return;
-	}
-	add_filter( 'woocommerce_subcategory_count_html', 'woo_remove_category_products_count' );
-
-// отключаить wooCommerce стили
+// Отключить WooCommerce стили
 function dp_dequeue_styles( $enqueue_styles ) {
 	unset( $enqueue_styles['woocommerce-general'] );	// Отключение общих стилей
 	unset( $enqueue_styles['woocommerce-layout'] );		// Отключение стилей шаблонов
 	unset( $enqueue_styles['woocommerce-smallscreen'] );	// Отключение оптимизации для маленьких экранов
 	return $enqueue_styles;
 	}
-	add_filter( 'woocommerce_enqueue_styles', 'dp_dequeue_styles' );
-
-/**
- * вернет объект таксономии если на странице есть категории товара
- * @param  string $taxonomy название таксаномии (Не уверен что логично изменять)
- * @return array | false 			ids дочерних категорий | не удалось получить
- */
-function get_children_product_cat_ids($taxonomy = 'product_cat'){
-	if(is_shop() && !is_search()){
-		$results = get_terms( $taxonomy );
-		if(!empty($results)){
-			$result = array();
-			foreach ($results as $term) {
-				$result[] = $term->term_id;
-			}
-		}
-	}
-	else {
-		$o = get_queried_object();
-		$term_id = !empty($o->term_id) ? $o->term_id : 0;
-		$result = get_term_children( $term_id, $taxonomy );
-	}
-
-	if(empty($result))
-		return false; // Не удалось получить
-
-	return $result;
-	}
-function has_product_cat(){
-	if(get_children_product_cat_ids())
-		return true;
-
-	return false;
-	}
+add_filter( 'woocommerce_enqueue_styles', 'dp_dequeue_styles' );
 
 // Регистрируем боковую зону для витрин магазина
 function init_woocommerce_sidebar(){
@@ -115,7 +54,7 @@ function init_woocommerce_sidebar(){
 		'after_title'   => '</h3>',
 		) );
 	}
-	add_action( 'widgets_init', 'init_woocommerce_sidebar' );
+add_action( 'widgets_init', 'init_woocommerce_sidebar' );
 
 // Используем формат цены вариативного товара WC 2.0
 function wc_wc20_variation_price_format( $price, $product ) {
@@ -142,15 +81,175 @@ function wc_wc20_variation_price_format( $price, $product ) {
 
     return $price;
 	}
-	add_filter( 'woocommerce_variable_sale_price_html', 'wc_wc20_variation_price_format', 10, 2 );
-	add_filter( 'woocommerce_variable_price_html', 'wc_wc20_variation_price_format', 10, 2 );
+add_filter( 'woocommerce_variable_sale_price_html', 'wc_wc20_variation_price_format', 10, 2 );
+add_filter( 'woocommerce_variable_price_html', 'wc_wc20_variation_price_format', 10, 2 );
 
-function change_product_label() {
-	global $wp_post_types;
-	$wp_post_types['product']->label = 'Каталог';
-	$labels = &$wp_post_types['product']->labels;
-	// $labels->name = 'Продукция';
-	// $labels->singular_name = 'Товар';
+/**
+ * Вернет объект таксономии если на странице есть категории товара
+ * @param  string $taxonomy название таксаномии (Не уверен что логично изменять)
+ * @return array | false 			ids дочерних категорий | не удалось получить
+ */
+function get_children_product_cat_ids($taxonomy = 'product_cat'){
+	if( is_shop() && !is_search() ){
+		$results = get_terms( $taxonomy );
+		if(!empty($results)){
+			$result = array();
+			foreach ($results as $term) {
+				$result[] = $term->term_id;
+			}
+		}
+	}
+	else {
+		$o = get_queried_object();
+		$term_id = !empty($o->term_id) ? $o->term_id : 0;
+		$result = get_term_children( $term_id, $taxonomy );
 	}
 
-	add_action( 'init', 'change_product_label' );
+	if(empty($result))
+		return false; // Не удалось получить
+
+	return $result;
+}
+function has_product_cat(){
+	if(get_children_product_cat_ids())
+		return true;
+
+	return false;
+}
+
+/**
+ * Add Customize
+ */
+// Определяем сетку вывода товара
+function wp_woo_shop_columns( $columns, $is_tax=false ) {
+	if( $is_tax && has_product_cat() ){
+		$columns = (int)get_theme_mod( 'woo_product_cat_columns', 4 );
+		return ( $columns < 1) ? 4 : $columns;
+	}
+
+	$columns = (int)get_theme_mod( 'woo_product_columns', 4 );
+	return ( $columns < 1) ? 4 : $columns;
+	}
+add_filter( 'loop_shop_columns', 'wp_woo_shop_columns' );
+
+// Количество товаров на странице
+function customize_per_page($cols){
+	if(wp_is_mobile())
+		return get_theme_mod( 'woo_item_count_mobile', 8 );
+
+	return get_theme_mod( 'woo_item_count', 16 );
+	}
+add_filter( 'loop_shop_per_page', 'customize_per_page', 20 );
+
+// Не показывать количество товаров в категории
+function woo_remove_category_products_count( $count_html ) {
+	if( get_theme_mod( 'woo_show_tax_count', false ) )
+		return $count_html;
+	
+    return false;
+	}
+add_filter( 'woocommerce_subcategory_count_html', 'woo_remove_category_products_count' );
+
+// Заменить "Товары" на..
+function change_product_labels() {
+	global $wp_post_types;
+
+	$label = $wp_post_types['product']->label = get_theme_mod( 'woo_product_label', 'Каталог' );
+	$wp_post_types['product']->labels->name = $label;
+	$wp_post_types['product']->labels->all_items = $label;
+	$wp_post_types['product']->labels->archives = $label;
+	$wp_post_types['product']->labels->menu_name = $label;
+	}
+add_action( 'init', 'change_product_labels' );
+
+function change_wc_menu_labels() {
+    global $menu;
+
+    foreach ($menu as $key => $value) {
+    	if($value[0] == 'WooCommerce')
+    		$menu[$key][0] = 'Магазин';
+
+    	if($value[0] == 'Товары')
+    		$menu[$key][0] = get_theme_mod( 'woo_product_label', 'Каталог' );
+    }
+	}
+add_action( 'admin_menu', 'change_wc_menu_labels' );
+
+function print_wc_settings( $wp_customize ){
+	$section = 'display_wc_options';
+	$wp_customize->add_section(
+		$section,
+		array(
+			'title'     => 'Настройки WooCommerce',
+			'priority'  => 60,
+			'description' => 'Настройки шаблона WooCommerce'
+			)
+		);
+
+	$wp_customize->add_setting( 'woo_product_columns', array('default' => '') );
+	$wp_customize->add_control(
+		'woo_product_columns',
+		array(
+			'section'     => $section,
+			'label'       => '',
+			'description' => 'Колличество товара в строке',
+			'type'        => 'number',
+			)
+		);
+
+    $wp_customize->add_setting( 'woo_product_cat_columns', array('default' => '') );
+    $wp_customize->add_control(
+    	'woo_product_cat_columns',
+    	array(
+    		'section'     => $section,
+    		'label'       => '',
+    		'description' => 'Колличество категорий в строке',
+    		'type'        => 'number',
+    		)
+    	);
+
+    $wp_customize->add_setting( 'woo_item_count', array('default' => '') );
+    $wp_customize->add_control(
+    	'woo_item_count',
+    	array(
+    		'section'     => $section,
+    		'label'       => '',
+    		'description' => 'Товаров на странице',
+    		'type'        => 'number',
+    		)
+    	);
+
+    $wp_customize->add_setting( 'woo_item_count_mobile', array('default' => '') );
+    $wp_customize->add_control(
+    	'woo_item_count_mobile',
+    	array(
+    		'section'     => $section,
+    		'label'       => '',
+    		'description' => 'Товаров на странице (Для мал. экранов)',
+    		'type'        => 'number',
+    		)
+    	);
+
+    $wp_customize->add_setting( 'woo_product_label', array('default' => '') );
+    $wp_customize->add_control(
+    	'woo_product_label',
+    	array(
+    		'section'     => $section,
+    		'label'       => '',
+    		'description' => 'Заменить "Товары" на..',
+    		'type'        => 'text',
+    		)
+    	);
+
+    $wp_customize->add_setting( 'woo_show_tax_count', array('default' => '') );
+    $wp_customize->add_control(
+    	'woo_show_tax_count',
+    	array(
+    		'section'     => $section,
+    		'label'       => 'Показывать колличество товара таксономии в скобках',
+    		'description' => '',
+    		'type'        => 'checkbox',
+    		)
+    	);
+}
+add_action( 'customize_register', 'print_wc_settings' );

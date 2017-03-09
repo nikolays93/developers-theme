@@ -4,7 +4,7 @@ class themeCustomizer {
   public $viewport = 1170;
   public $w_paddings = 15;
 
-  public static $fonts_exist = array(
+  public $fonts_exist = array(
     '' => 'Использовать шрифт ОС',
     'OpenSans'  => 'Open Sans',
     'Arial'     => 'Arial',
@@ -20,11 +20,11 @@ class themeCustomizer {
     'Lobster'   =>  'Lobster',
     );
 
-  function __construct()
-  {
+  function __construct(){
     add_action( 'customize_register', array($this, 'print_settings') );
     add_action( 'wp_head', array($this, 'set_dp_format') );
     add_action( 'wp_head', array($this, 'set_custom_font') );
+    
     if (get_theme_mod( 'allow_click', false ))
       add_action( 'wp_head', array($this, 'allow_dropdown_click') );
   }
@@ -80,7 +80,7 @@ class themeCustomizer {
         'section'  => 'display_options',
         'label'    => 'Шрифт',
         'type'     => 'select',
-        'choices'  => self::$fonts_exist
+        'choices'  => $this->fonts_exist
       )
     );
 
@@ -91,7 +91,7 @@ class themeCustomizer {
         'section'  => 'display_options',
         'label'    => 'Шрифт заголовков',
         'type'     => 'select',
-        'choices'  => self::$fonts_exist
+        'choices'  => $this->fonts_exist
       )
     );
 

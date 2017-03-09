@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$columns = wp_woo_shop_columns(null);
+$columns = wp_woo_shop_columns(null, true);
 $non_responsive = get_theme_mod( 'site-format' );
 $non_responsive = ($non_responsive == 'adaptive') ? false : true;
 
