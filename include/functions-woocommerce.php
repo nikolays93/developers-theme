@@ -11,10 +11,11 @@ function change_currency_symbol( $currency_symbol, $currency ) {
 	if( $currency == 'RUB' ){
 		if( defined(DT_PLUGIN_NAME) && $opt = get_option( DT_PLUGIN_NAME ) ){
 			if(! empty( $opt['FontAwesome'] ) )
-				return '<i class="fa fa-rub"></i>';
+				$currency_symbol = '<i class="fa fa-rub"></i>';
 		}
-		return 'Р.';
+		$currency_symbol = 'Р.';
 	}
+	return $currency_symbol;
 	}
 add_filter('woocommerce_currency_symbol', 'change_currency_symbol', 10, 2);
 
