@@ -187,7 +187,7 @@ function print_wc_settings( $wp_customize ){
 			)
 		);
 
-	$wp_customize->add_setting( 'woo_product_columns', array('default' => '') );
+	$wp_customize->add_setting( 'woo_product_columns', array('default' => '4') );
 	$wp_customize->add_control(
 		'woo_product_columns',
 		array(
@@ -198,7 +198,7 @@ function print_wc_settings( $wp_customize ){
 			)
 		);
 
-    $wp_customize->add_setting( 'woo_product_cat_columns', array('default' => '') );
+    $wp_customize->add_setting( 'woo_product_cat_columns', array('default' => '4') );
     $wp_customize->add_control(
     	'woo_product_cat_columns',
     	array(
@@ -209,7 +209,7 @@ function print_wc_settings( $wp_customize ){
     		)
     	);
 
-    $wp_customize->add_setting( 'woo_item_count', array('default' => '') );
+    $wp_customize->add_setting( 'woo_item_count', array('default' => '16') );
     $wp_customize->add_control(
     	'woo_item_count',
     	array(
@@ -220,7 +220,7 @@ function print_wc_settings( $wp_customize ){
     		)
     	);
 
-    $wp_customize->add_setting( 'woo_item_count_mobile', array('default' => '') );
+    $wp_customize->add_setting( 'woo_item_count_mobile', array('default' => '8') );
     $wp_customize->add_control(
     	'woo_item_count_mobile',
     	array(
