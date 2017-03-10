@@ -47,22 +47,6 @@ if(WP_DEBUG){
 }
 function _d($var){ _dump($var); }
 
-/**
- * Информация о компании (из customizer'а)
- */
-function get_company_info($field){
-  $field = ( is_array($field) ) ? esc_attr($field['info']) : esc_attr( $field );
-
-  $info = get_theme_mod( 'company_'.$field );
-  $filter_info = get_theme_mod( 'filter_company_'.$field );
-  
-  if(!$filter_info)
-    $info = apply_filters( 'the_content', $info);
-  
-  return $info;
-}
-add_shortcode('company', 'get_company_info');
-
 function get_logotype($responsive_img = false){
   $logotype = false;
   $urls = array(

@@ -28,15 +28,20 @@ class themeCustomizer {
     if (get_theme_mod( 'allow_click', false ))
       add_action( 'wp_head', array($this, 'allow_dropdown_click') );
   }
+  
   function print_settings( $wp_customize ) {
+    /**
+     * Настройки отображения
+     */
     $wp_customize->add_section(
       'display_options',
       array(
         'title'     => 'Настройки отображения',
         'priority'  => 50,
         'description' => 'Настройте внешний вид вашего сайта'
-      )
-    );
+        )
+      );
+
     $wp_customize->add_setting('site-format', array('default'   => 'static'));
     $wp_customize->add_control(
       'site-format',
@@ -49,8 +54,9 @@ class themeCustomizer {
           'static'  =>  'Статичный',
           'adaptive' => 'Адаптивный',
           )
-      )
-    );
+        )
+      );
+
     $wp_customize->add_setting('use_scss', array('default'   => ''));
     $wp_customize->add_control(
       'use_scss',
@@ -59,8 +65,8 @@ class themeCustomizer {
         'label'    => 'Использовать Scss предпроцессор (Только от имени админ-а)',
         'description' => 'После изменения стилей обновите страницу, чтобы предпроцессор скомпилировал стили. Прежде отключения удалите style.css, а assets/style.css переместите вместо него.',
         'type'     => 'checkbox',
-      )
-    );
+        )
+      );
 
     $wp_customize->add_setting('allow_click', array('default'   => ''));
     $wp_customize->add_control(
@@ -70,9 +76,9 @@ class themeCustomizer {
         'label'    => 'Разрешить переход по ссылке выпадающего меню',
         'description' => '',
         'type'     => 'checkbox',
-      )
-    );
-    // Шрифт
+        )
+      );
+
     $wp_customize->add_setting('custom_body_font', array('default'   => ''));
     $wp_customize->add_control(
       'custom_body_font',
@@ -81,8 +87,8 @@ class themeCustomizer {
         'label'    => 'Шрифт',
         'type'     => 'select',
         'choices'  => $this->fonts_exist
-      )
-    );
+        )
+      );
 
     $wp_customize->add_setting('custom_headlines_font', array('default'   => ''));
     $wp_customize->add_control(
@@ -92,78 +98,61 @@ class themeCustomizer {
         'label'    => 'Шрифт заголовков',
         'type'     => 'select',
         'choices'  => $this->fonts_exist
-      )
-    );
+        )
+      );
 
+    /**
+     * Информация о компании
+     */
     $wp_customize->add_section('company_options', array(
-        'title'     => 'Информация о компании',
-        'priority'  => 60,
-        'description' => 'Добавьте информации о своей организации'
+      'title'     => 'Информация о компании',
+      'priority'  => 60,
+      'description' => 'Добавьте информации о своей организации'
       )
     );
     
-    // Адресс
-      $wp_customize->add_setting('company_address');
-      $wp_customize->add_control('company_address',
-        array(
-          'type'     => 'textarea',
-          'label'    => 'Адрес',
-          'section'  => 'company_options',
+    $wp_customize->add_setting('company_address');
+    $wp_customize->add_control('company_address',
+      array(
+        'type'     => 'textarea',
+        'label'    => 'Адрес',
+        'section'  => 'company_options',
         )
       );
 
-      $wp_customize->add_setting('filter_company_address', array('default' => ''));
-      $wp_customize->add_control('filter_company_address',
-        array(
-          'type' => 'checkbox',
-          'label' => 'Не использовать content фильтр',
-          'section'  => 'company_options',
-          )
-        );
-
-    // Номера (контактных телефонов)
-      $wp_customize->add_setting('company_numbers');
-      $wp_customize->add_control('company_numbers',
-        array(
-          'type'     => 'textarea',
-          'label'    => 'Номера телефонов',
-          'section'  => 'company_options',
+    $wp_customize->add_setting('company_numbers');
+    $wp_customize->add_control('company_numbers',
+      array(
+        'type'     => 'textarea',
+        'label'    => 'Номера телефонов',
+        'section'  => 'company_options',
         )
       );
 
-      $wp_customize->add_setting('filter_company_numbers', array('default' => ''));
-      $wp_customize->add_control('filter_company_numbers',
-        array(
-          'type' => 'checkbox',
-          'label' => 'Не использовать content фильтр',
-          'section'  => 'company_options',
-          )
-        );
-
-      $wp_customize->add_setting('company_work_time');
-      $wp_customize->add_control('company_work_time',
-        array(
-          'type'     => 'textarea',
-          'label'    => 'Режим работы',
-          'section'  => 'company_options',
+    $wp_customize->add_setting('company_email');
+    $wp_customize->add_control('company_email',
+      array(
+        'type'     => 'text',
+        'label'    => 'Email адрес',
+        'section'  => 'company_options',
         )
       );
-      
-      $wp_customize->add_setting('filter_company_work_time', array('default' => ''));
-      $wp_customize->add_control('filter_company_work_time',
-        array(
-          'type' => 'checkbox',
-          'label' => 'Не использовать content фильтр',
-          'section'  => 'company_options',
-          )
-        );
 
-      $wp_customize->add_setting('company_email');
-      $wp_customize->add_control('company_email',
-        array(
-          'type'     => 'text',
-          'label'    => 'Email адрес',
-          'section'  => 'company_options',
+    $wp_customize->add_setting('company_time_work');
+    $wp_customize->add_control('company_time_work',
+      array(
+        'type'     => 'textarea',
+        'label'    => 'Режим работы',
+        'section'  => 'company_options',
+        )
+      );
+
+    $wp_customize->add_setting('company_socials');
+    $wp_customize->add_control('company_socials',
+      array(
+        'type'     => 'textarea',
+        'label'    => 'Социальные сети',
+        'section'  => 'company_options',
         )
       );
   }
@@ -182,9 +171,9 @@ class themeCustomizer {
     echo $meta;
   }
   function allow_dropdown_click(){
+    
     echo '<style>.navbar-default .navbar-nav .nav-item:hover > .dropdown-menu { display: block; }</style>';
   }
-
   function set_custom_font(){
     $font_code = array();
       // Загружаем основной шрифт
@@ -258,6 +247,43 @@ class themeCustomizer {
       echo "<link href='", $font_code['1'], "' rel='stylesheet' type='text/css'>";
     }
   }
-// end class
 }
 new themeCustomizer();
+
+// [our_address], [our_numbers], [our_email], [our_time_work], [our_socials] - for easy use
+function get_company_info( $field, $filter = 'the_content' ){
+  if(! $field )
+    return false;
+
+  $info = get_theme_mod( 'company_' . $field );
+
+  if( $filter )
+    return apply_filters( $filter, $info);
+
+  return $info;
+}
+function get_company_address(){ return get_company_info('address'); }
+function get_company_numbers(){ return get_company_info('numbers'); }
+function get_company_time_work(){ return get_company_info('time_work'); }
+function get_company_email(){ return get_company_info('email'); }
+function get_company_socials(){ return get_company_info('socials'); }
+function get_company_first_number( $del = ',', $num=0, $filter = 'the_content' ) {
+  // for shortcode
+  if(! $del) $del = ',';
+  if(! $num) $num = 0;
+  if(! $filter || $filter != false) $filter = 'the_content';
+
+  $numbers = get_company_info('numbers', false);
+  $number = explode($del, $numbers);
+  
+  if($filter)
+    return apply_filters( 'the_content', $number[$num] );
+
+  return $number[$num];
+}
+add_shortcode('our_address', 'get_company_address');
+add_shortcode('our_numbers', 'get_company_numbers');
+add_shortcode('our_first_number', 'get_company_first_number');
+add_shortcode('our_time_work', 'get_company_time_work');
+add_shortcode('our_email', 'get_company_email');
+add_shortcode('our_socials', 'get_company_socials');
