@@ -9,21 +9,19 @@
 </head>
 <body <?php body_class(); ?>>
 	<div id="page" class="site">
-	<?php // <!-- =8<== --> ?>
 		<div class="container">
 			<div class="row head-info">
-				<div class="col-4 logotype"><?php the_logotype(true); ?></div>
-				<div class="col-4"><?php echo get_company_info('address'); ?></div>
+				<div class="col-4 logotype"><?php the_custom_logo(); ?></div>
+				<div class="col-4">
+					<?php echo get_company_info('address'); ?>
+				</div>
 				<div class="col-4">
 					<?php echo get_company_info('numbers'); ?>
 					<?php echo get_company_info('email'); ?>
+					<?php echo get_company_info('work-time'); ?>
+					<?php echo get_company_info('socials'); ?>
 				</div>
 			</div><!--.row head-info-->
 		</div>
-	<?php // <!-- =8<== --> ?>
-		<nav class="navbar navbar-default navbar-toggleable-md">
-			<div class="container">
-				<?php do_action('main_menu_template'); ?>
-			</div>
-		</nav>
+		<?php default_theme_nav(); ?>
 		<div id="content" class="site-content">

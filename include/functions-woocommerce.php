@@ -1,4 +1,5 @@
 <?php
+if ( ! defined( 'ABSPATH' ) )    exit; // Exit if accessed directly
 
 // Добавляем поддержку WooCommerce
 function woocommerce_support() {

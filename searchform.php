@@ -1,8 +1,6 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
+if ( ! defined( 'ABSPATH' ) ) 
 	exit;
-}
-
 ?>
 <form role="search" method="get" id="searchform" action="<?php echo home_url( '/' ) ?>" >
 	<div class="input-group">
@@ -10,7 +8,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 		
 		<span class="input-group-btn">
 			<button class="btn btn-default" id="searchsubmit" type="submit">
-				<span class="dashicons dashicons-search"></span>
+				<?php
+				$search_btn = 'Найти';//'<span class="dashicons dashicons-search"></span>';
+				if( $opt = get_option( 'DevelopersTools' ) ){
+					if( isset($opt['font_awesome']) )
+						$search_btn = '<span class="fa fa-search"></span>';
+				}
+				echo $search_btn;
+				?>
 			</button>
 		</span>
 	</div>

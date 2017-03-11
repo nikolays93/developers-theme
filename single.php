@@ -18,20 +18,13 @@ $type = $affix = get_post_type();
 		<div id="primary" class="<?php echo $primary_class; ?>">
 			<main id="main" role="main">
 			<?php
-				if ( have_posts() ){
-					while ( have_posts() ) :
-						the_post();
+				the_post();
 
-					if($type == 'post')
-						$affix = get_post_format();
-					
-					get_template_part( 'template-parts/content', $affix );
-					endwhile;
-					the_template_pagination();
-				}
-				else {
-					get_template_part( 'template-parts/content', 'none' );
-				}
+				if($type == 'post')
+					$affix = get_post_format();
+				
+				get_template_part( 'template-parts/content', $affix );
+				the_template_pagination();
 			?>
 			</main><!-- #main -->
 		</div><!-- #primary -->

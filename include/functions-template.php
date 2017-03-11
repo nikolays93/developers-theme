@@ -5,18 +5,14 @@
  * Получить заголовок записи
  * Получить заголовок архива
  * Принятые настройки постраничной навигации
- * Получить стандартные классы ячейки bootstrap сетки
  * Получить ID самой родительской страницы
- * Добавить шорткод [CODE]
  * Отчистить мета теги
- * Исключить аттрибуты width и height из тега img
- * Шаблон вывода главного меню
  * Добавить ссылку о разработчике в топбар
  * Сменить строку "Спасибо за творчество с Wordpress"
  */
 if ( ! defined( 'ABSPATH' ) )    exit; // Exit if accessed directly
 
-if(WP_DEBUG){
+if(is_wp_debug() || current_user_can( 'edit_theme_options' ) ){
   function _dump($var){
     echo '<style>
     #dump {
@@ -47,59 +43,61 @@ if(WP_DEBUG){
 }
 function _d($var){ _dump($var); }
 
-function get_logotype($responsive_img = false){
-  $logotype = false;
-  $urls = array(
-    'png' => dirname(__FILE__) . '/../img/logotype.png',
-    'jpg' => dirname(__FILE__) . '/../img/logotype.jpg'
-    );
-  foreach ($urls as $type => $url) {
-    if(is_file($url) && is_readable($url)){
-      $class = $responsive_img ? ' class="full"' : '';
-      $url = get_template_directory_uri().'/img/logotype.'.$type;
-      $alt = get_bloginfo('name');
-      
-      $logotype = "<img{$class} src='{$url}' alt='{$alt}' />";
-    }
-  }
-  return $logotype;
+add_filter( 'set_custom_brand', 'add_custom_brand', 10, 3 );
+function add_custom_brand($brand, $brand_class, $brand_title){
+  $brand = '<a class="'.$brand_class.'" title="'.$brand_title.'" href="'.get_home_url().'">'.$brand.'</a>';
+  return $brand;
 }
 
-function the_logotype($clear = false){
-  $logotype = get_logotype();
-  if($clear){
-    $out = '<a class="image-brand" title="Перейти на главную" href="'.get_home_url().'">';
-    $out .= $logotype;
-    $out .= '</a>';
-  }
-  else {
-    $out = $logotype;
-  }
-
-  echo $out;
-}
-
-add_action('main_menu_template', function(){
-  $sf = get_theme_mod( 'site-format' );
-  if($sf == 'adaptive'){ ?>
-    <a class="navbar-brand hidden-md-up text-primary" title="<?php echo get_bloginfo('description'); ?>" href="<?php echo home_url(); ?>"><?php bloginfo('name'); ?></a>
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+function default_theme_nav(
+  $args = array( 'container_class' => 'container' ),
+  $container = array( '<nav class="navbar navbar-default non-responsive">', '</nav>' ),
+  $toggler = '' ){
+  
+  if( get_theme_mod( 'site-mode' ) ){
+    $container = array( '<nav class="navbar navbar-default navbar-toggleable-md navbar-light">', '</nav>' );
+    $args['container_class'] .= ' collapse navbar-collapse navbar-responsive-collapse';
+    $args['container_id'] = 'default-collapse';
+    $toggler = '
+    <button class="navbar-toggler navbar-toggler-left" type="button" data-toggle="collapse" data-target="#default-collapse" aria-controls="default-collapse" aria-expanded="false">
       <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <?php wp_bootstrap_main_nav(); ?>
-    </div><!-- #navbarResponsive -->
-  <?php
+    </button>';
   }
-  else { ?>
-    <?php wp_bootstrap_main_nav(); ?>
-    <?php
-  }
-});
+
+  $brand = apply_filters( 'set_custom_brand', get_bloginfo("name"), 'navbar-brand hidden-lg-up text-center text-primary', get_bloginfo("description") );
+
+  echo $container[0];
+  echo $toggler;
+  echo $brand;
+  echo wp_bootstrap_nav( $args );
+  echo $container[1];
+}
+
+function wp_bootstrap_nav( $args = array() ) {
+  $defaults = array(
+    'menu' => 'main_nav',
+    'menu_class' => 'nav navbar-nav',
+    'theme_location' => 'primary',
+    'walker' => new Bootstrap_walker(),
+    'allow_click' => get_theme_mod( 'allow_click', false )
+    );
+
+  $args = array_merge($defaults, $args);
+  wp_nav_menu( $args );
+}
+
+function wp_footer_links() {
+  wp_nav_menu(
+    array(
+      'menu' => 'footer_links', /* menu name */
+      'theme_location' => 'footer', /* where in the theme it's assigned */
+      'container_class' => 'footer clearfix', /* container class */
+    )
+  );
+}
 
 /**
- * yoast крошки (Для активации установить/активировать плагин, 
- * дополнительно => breadcrumbs => enable)
+ * yoast крошки ( Для активации установить/активировать плагин, дополнительно => breadcrumbs => enable )
  */
 add_action('breadcrumbs_from_yoast', function(){
   if ( function_exists('yoast_breadcrumb') ) {
@@ -262,24 +260,6 @@ function the_template_pagination($echo=true){
 }
 
 /**
- * Получить стандартные классы ячейки bootstrap сетки
- */
-function get_default_bs_columns($columns_count="4", $non_responsive=false){
-  switch ($columns_count) {
-    case '1': $col = 'col-12'; break;
-    case '2': $col = (!$non_responsive) ? 'col-6 col-sm-6 col-md-6 col-lg-6' : 'col-6'; break;
-    case '3': $col = (!$non_responsive) ? 'col-12 col-sm-6 col-md-4 col-lg-4' : 'col-4'; break;
-    case '4': $col = (!$non_responsive) ? 'col-6 col-sm-4 col-md-3 col-lg-3' : 'col-3'; break;
-    case '5': $col = (!$non_responsive) ? 'col-12 col-sm-6 col-md-2-4 col-lg-2-4' : 'col-2-4'; break; // be careful
-    case '6': $col = (!$non_responsive) ? 'col-6 col-sm-4 col-md-2 col-lg-2' : 'col-2'; break;
-    case '12': $col= (!$non_responsive) ? 'col-4 col-sm-3 col-md-1 col-lg-1' : 'col-1'; break;
-    
-    default: $col = false; break;
-  }
-  return $col;
-}
-
-/**
  * Получить ID самой родительской страницы (после "главной")
  */
 function get_parent_page_id($post) {
@@ -310,104 +290,6 @@ function seo18_head_cleanup() {
   add_action( 'init', 'seo18_head_cleanup' );
 
 /**
- * Исключить аттрибуты width и height из тега img при выводе thumbnail'а
- */
-function wp_bootstrap_remove_thumbnail_dimensions( $html ) {
-  $html = preg_replace( '/(width|height)=\"\d*\"\s/', "", $html );
-  return $html;
-  }
-  add_filter( 'post_thumbnail_html', 'wp_bootstrap_remove_thumbnail_dimensions', 10 );
-  add_filter( 'image_send_to_editor', 'wp_bootstrap_remove_thumbnail_dimensions', 10 );
-
-/**
- * Добавить все главным меню элементам li.nav-item и li.nav-item.active активному элементу
- */
-function wp_add_bootstrap_class($classes, $item) {
-  if( $item->menu_item_parent == 0 && in_array('current-menu-item', $classes) )
-    $classes[] = "active";
-
-  if($item->menu_item_parent == 0)
-    $classes[] = "nav-item";
-
-  return $classes;
-  }
-  add_filter('nav_menu_css_class', 'wp_add_bootstrap_class', 10, 2 );
-
-/**
- * Шаблон вывода главного меню
- */
-class Bootstrap_walker extends Walker_Nav_Menu{
-
-  function start_el(&$output, $object, $depth = 0, $args = Array(), $current_object_id = 0){
-  if( is_object($args) ):
-   global $wp_query;
-   $indent = ( $depth ) ? str_repeat( "\t", $depth ) : '';
-  
-   $class_names = $value = '';
-  
-    // If the item has children, add the dropdown class for bootstrap
-    
-    
-    if ( $args->has_children ) {
-      $class_names = "dropdown ";
-    }
-  
-    $classes = empty( $object->classes ) ? array() : (array) $object->classes;
-    
-    $class_names .= join( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $object ) );
-    $class_names = ' class="'. esc_attr( $class_names ) . '"';
-       
-    $output .= $indent . '<li id="menu-item-'. $object->ID . '"' . $value . $class_names .'>';
-
-    $attributes  = ! empty( $object->attr_title ) ? ' title="'  . esc_attr( $object->attr_title ) .'"' : '';
-    $attributes .= ! empty( $object->target )     ? ' target="' . esc_attr( $object->target     ) .'"' : '';
-    $attributes .= ! empty( $object->xfn )        ? ' rel="'    . esc_attr( $object->xfn        ) .'"' : '';
-    $attributes .= ! empty( $object->url )        ? ' href="'   . esc_attr( $object->url        ) .'"' : '';
-
-    // if the item has children add these two attributes to the anchor tag
-    if ( $args->has_children ) {
-      if($depth == 0){
-        if(empty($args->allow_click))
-          $attributes .= ' class="nav-link dropdown-toggle" data-toggle="dropdown"';
-        else
-          $attributes .= ' class="nav-link dropdown-toggle"';
-      } else {
-        $attributes .= ' class="dropdown-item"';
-      }
-    // not has children
-    } else {
-      if($depth == 0)
-        $attributes .= ' class="nav-link"';
-      else
-        $attributes .= ' class="dropdown-item"';
-    }
-
-    $item_output = $args->before;
-    $item_output .= '<a'. $attributes .'>';
-    $item_output .= $args->link_before .apply_filters( 'the_title', $object->title, $object->ID );
-    $item_output .= $args->link_after;
-    $item_output .= '</a>';
-    $item_output .= $args->after;
-
-    $output .= apply_filters( 'walker_nav_menu_start_el', $item_output, $object, $depth, $args );
-  endif; // is_object
-  } // end start_el function
-        
-  function start_lvl(&$output, $depth = 0, $args = Array()) {
-    $indent = str_repeat("\t", $depth);
-    $output .= "\n$indent<ul class=\"dropdown-menu\">\n";
-  }
-      
-  function display_element( $element, &$children_elements, $max_depth, $depth=0, $args, &$output ){
-    $id_field = $this->db_fields['id'];
-    if ( is_object( $args[0] ) ) {
-        $args[0]->has_children = ! empty( $children_elements[$element->$id_field] );
-    }
-    return parent::display_element( $element, $children_elements, $max_depth, $depth, $args, $output );
-  }        
-}
-
-/**
  * Добавить ссылку о разработчике в топбар
  */
 function customize_toolbar_link($wp_admin_bar) {
@@ -422,13 +304,11 @@ function customize_toolbar_link($wp_admin_bar) {
   }
   add_action('admin_bar_menu', 'customize_toolbar_link', 999);
 
-if(is_admin()){
-  /**
-   * Сменить строку "Спасибо за творчество с Wordpress"
-   */
-  function custom_admin_footer() {
-    echo '<span id="footer-thankyou">Разработано компанией <a href="http://seo18.ru" target="_blank">seo18.ru - создание и продвижение сайтов</a></span>.
-    <small> Использована система <a href="wordpress.com">WordPress</a>. </small>';
-    }
-    add_filter('admin_footer_text', 'custom_admin_footer');
-}
+/**
+ * Сменить строку "Спасибо за творчество с Wordpress"
+ */
+function custom_admin_footer() {
+  echo '<span id="footer-thankyou">Разработано компанией <a href="http://seo18.ru" target="_blank">seo18.ru - создание и продвижение сайтов</a></span>.
+  <small> Использована система <a href="wordpress.com">WordPress</a>. </small>';
+  }
+  add_filter('admin_footer_text', 'custom_admin_footer');

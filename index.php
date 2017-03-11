@@ -42,7 +42,8 @@ $type = $affix = get_post_type();
 					the_template_pagination();
 				}
 				else {
-					get_template_part( 'template-parts/content', 'none' );
+					if( !is_front_page() )
+						get_template_part( 'template-parts/content', 'none' );
 				}
 			?>	
 			</main><!-- #main -->

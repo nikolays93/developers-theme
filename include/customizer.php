@@ -1,4 +1,5 @@
 <?php
+if ( ! defined( 'ABSPATH' ) )    exit; // Exit if accessed directly
 
 class themeCustomizer {
   public $viewport = 1170;
@@ -42,18 +43,14 @@ class themeCustomizer {
         )
       );
 
-    $wp_customize->add_setting('site-format', array('default'   => 'static'));
+    $wp_customize->add_setting('site-mode', array('default'   => 'static'));
     $wp_customize->add_control(
-      'site-format',
+      'site-mode',
       array(
         'section'  => 'display_options',
-        'label'    => 'Формат сайта',
-        'description' => 'Будьте внимательны! Адаптивные сайты часто не поддерживают статичость и наоборот.',
-        'type'     => 'select',
-        'choices'  => array(
-          'static'  =>  'Статичный',
-          'adaptive' => 'Адаптивный',
-          )
+        'label'    => 'Адаптивный шаблон',
+        'description' => 'Если ваш шаблон адаптивный, включите это.',
+        'type'     => 'checkbox'
         )
       );
 
@@ -138,8 +135,8 @@ class themeCustomizer {
         )
       );
 
-    $wp_customize->add_setting('company_time_work');
-    $wp_customize->add_control('company_time_work',
+    $wp_customize->add_setting('company_work_time');
+    $wp_customize->add_control('company_work_time',
       array(
         'type'     => 'textarea',
         'label'    => 'Режим работы',
@@ -158,8 +155,7 @@ class themeCustomizer {
   }
 
   function set_dp_format(){
-    $format = get_theme_mod( 'site-format' );
-    if($format == 'adaptive'){
+    if( get_theme_mod( 'site-mode' ) ){
       $meta = '<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">';
     } else {
