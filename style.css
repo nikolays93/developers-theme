@@ -10,33 +10,34 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: seo18theme
 Tags: Start, Bootstrap
 */
-//
-// Vnimanie! Warning! Achtung!
-//
-// Dlya compilyacii etogo faila: zaidite pod administratorom i obnovite lubuu front stranicu
-//
 
-// * Imports
+///*
+// * Внимание! Warning! Achtung!
+// *
+// * Для компиляции этого файла: Зайдите под администратором и обновите любую front страницу
+// * Refresh any front page with logged in user for compile
+// */
+
+///* Imports
 // * Header
 // * Navigations
 // * Sides
 // * Posts and pages
 // * Footer
 // * Woocommerce
-// * Content
+// * Content */
 
-// * Imports
-// 
-// be care - its not compass
+
+// /* Imports  be care - its not compass (Укажите полный путь до файла) */
 @import "../../../../plugins/wp-developers-tool/assets/bootstrap/scss/bs4scss/_mixins.scss";
 @import "../../../../plugins/wp-developers-tool/assets/bootstrap/scss/bs4scss/_custom.scss";
 @import "_defaults.scss";
 
-// * Header
+// /* Header */
 
-// * Navigations
+// /* Navigations */
 .navbar-default {
-  width: 100%; // sticky fix
+  width: 100%; // /* sticky fix */
   background-color: #ccc;
   margin-bottom: 20px;
   padding: 0;
@@ -107,13 +108,13 @@ Tags: Start, Bootstrap
 
 }
 
-// * Sides
+// /* Sides */
 
-// * Posts and pages
+// /* Posts and pages */
 
-// * Footer
+// /* Footer */
 
-// * Woocommerce
+// /* Woocommerce */
 .row.products {
   .first {
     clear: both;
@@ -122,7 +123,7 @@ Tags: Start, Bootstrap
     margin-bottom: 20px;
   }
   
-  // product
+  // /* product */
   .product-thumbnail {
     background-repeat: no-repeat;
     background-position: center;
@@ -140,11 +141,6 @@ Tags: Start, Bootstrap
       background-repeat: no-repeat;
       background-position: center;
       height: 150px;
-      // float: left;
-      // width: 150px;
-    }
-    h3 {
-      // title
     }
   }
   
@@ -185,4 +181,4 @@ Tags: Start, Bootstrap
     padding-right: 90px;
   }
 }
-// * Content
+// /* Content */
