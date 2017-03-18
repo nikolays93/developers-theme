@@ -10,7 +10,7 @@ add_action( 'after_setup_theme', 'woocommerce_support' );
 // Меняем символ рубля (так как он работает не корректно на некоторых системах)
 function change_currency_symbol( $currency_symbol, $currency ) {
 	if( $currency == 'RUB' ){
-		if( defined(DT_PLUGIN_NAME) && $opt = get_option( DT_PLUGIN_NAME ) ){
+		if( defined('DT_PLUGIN_NAME') && $opt = get_option( DT_PLUGIN_NAME ) ){
 			if(! empty( $opt['FontAwesome'] ) )
 				$currency_symbol = '<i class="fa fa-rub"></i>';
 		}
