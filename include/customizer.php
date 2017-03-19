@@ -43,7 +43,7 @@ class themeCustomizer {
         )
       );
 
-    $wp_customize->add_setting('site-mode', array('default'   => 'static'));
+    $wp_customize->add_setting('responsive', array('default'   => false));
     $wp_customize->add_control(
       'site-mode',
       array(
@@ -155,7 +155,7 @@ class themeCustomizer {
   }
 
   function set_dp_format(){
-    if( get_theme_mod( 'site-mode' ) ){
+    if( get_theme_mod( 'responsive' ) ){
       $meta = '<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">';
     } else {

@@ -54,7 +54,7 @@ function default_theme_nav(
   $container = array( '<nav class="navbar navbar-default non-responsive">', '</nav>' ),
   $toggler = '' ){
   
-  if( get_theme_mod( 'site-mode' ) ){
+  if( get_theme_mod( 'responsive' ) ){
     $container = array( '<nav class="navbar navbar-default navbar-toggleable-md navbar-light">', '</nav>' );
     $args['container_class'] .= ' collapse navbar-collapse navbar-responsive-collapse';
     $args['container_id'] = 'default-collapse';
