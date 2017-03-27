@@ -67,6 +67,15 @@
 //     text-decoration: none;
 //   }
 // }
+
+#primary .media-body { max-width: 100%; }
+ul.row {
+  @include clear-list(0);
+}
+
+img { max-width: 100%; height: auto; }
+img.full { max-width: auto !important; }
+
 .entry-content {
   h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
     color: $brand-primary;
@@ -74,13 +83,6 @@
     margin-bottom: 10px;
   }
 }
-
-ul.row {
-  @include clear-list(0);
-}
-
-img { max-width: 100%; height: auto; }
-img.full { max-width: auto !important; }
 
 .no-underline { @include plain-hover-focus(){ text-decoration: none; } }
 .fll { float: left; }
