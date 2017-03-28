@@ -82,13 +82,10 @@
   }
 }
 
-ul.row {
-  @include clear-list(0);
-}
-
 img { max-width: 100%; height: auto; }
 img.full { max-width: auto !important; }
 
+.clear-list, ul.row { @include clear-list(0); }
 .no-underline { @include plain-hover-focus(){ text-decoration: none; } }
 .fll { float: left; }
 .flr { float: right; }
