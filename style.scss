@@ -176,7 +176,7 @@ Tags: Start, Bootstrap, scss
   }
 }
 @media (min-width: 1200px){
-  .row.small {
+  .row.small, .container.small {
     padding-left: 90px;
     padding-right: 90px;
   }
