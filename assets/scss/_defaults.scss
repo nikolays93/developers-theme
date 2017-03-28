@@ -92,6 +92,7 @@ img.full { max-width: auto !important; }
 .mb10 { margin-bottom: 10px; }
 .mb20 { margin-bottom: 20px; }
 .hidden { display: none; }
+.two-columns { columns: 2; }
 
 // 5 columns on row
 .col-2-4,
@@ -125,4 +126,20 @@ img.full { max-width: auto !important; }
 		width: 20%;
 		float: left;
 	}
+}
+
+@media (min-width: 1200px){
+  // small containers
+  .sm {
+    padding-left: 90px;
+    padding-right: 90px;
+  }
+  .sm.left {
+    padding-left: 0px;
+    padding-right: 180px;
+  }
+  .sm.right {
+    padding-left: 180px;
+    padding-right: 0px;
+  }
 }
