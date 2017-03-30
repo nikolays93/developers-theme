@@ -13,27 +13,13 @@
 if ( ! defined( 'ABSPATH' ) )    exit; // Exit if accessed directly
 
 if(is_wp_debug() || current_user_can( 'edit_theme_options' ) ){
-  function _dump($var){
-    echo '<style>
-    #dump {
-    background: #ccc;
-    width: 100%;
-    height: 200px;
-    overflow: auto;
-    padding: 10px;
-  }
-  #dump:hover {
-    height: 500px;
-  }
-  </style>
-  <pre id="dump">';
+  function _dump(&$var){
 
-  if(empty($var))
+  if( empty($var) )
     print_r('var is empty');
-  
-    $start = microtime(true);
+    
+    echo '<pre>';
     print_r($var);
-    echo '<hr> Время выполнения: '.number_format((microtime(true) - $start), 6).' сек. - print_r';
     echo '</pre>';
   }
 } else {
@@ -41,7 +27,7 @@ if(is_wp_debug() || current_user_can( 'edit_theme_options' ) ){
     return false;
   }
 }
-function _d($var){ _dump($var); }
+function _d(&$var){ _dump($var); }
 
 add_filter( 'set_custom_brand', 'add_custom_brand', 10, 3 );
 function add_custom_brand($brand, $brand_class, $brand_title){
