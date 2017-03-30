@@ -29,6 +29,47 @@ if(is_wp_debug() || current_user_can( 'edit_theme_options' ) ){
 }
 function _d(&$var){ _dump($var); }
 
+function get_tpl_content( $affix, $return = false ){
+  if($return)
+    ob_start();
+
+  while ( have_posts() ){
+    the_post();
+    
+    // need for search
+    if( ! $affix )
+      $affix = get_post_type();
+
+    if( $affix != 'product' )
+      get_template_part( 'template-parts/content', $affix );
+  }
+
+  if($return)
+    return ob_get_clean();
+}
+
+function get_tpl_search_content( $return = false ){
+  ob_start();
+  while ( have_posts() ){
+    the_post();
+
+    if( get_post_type() == 'product')
+      wc_get_template_part( 'content', 'product' );
+  }
+  $products = ob_get_clean();
+  $content = get_tpl_content( false, true );
+
+  if( $return ){
+    return $products . $content;
+  }
+  else {
+    if($products)
+      echo "<ul class='products row'>" . $products . "</ul>";
+    echo $content;
+  }
+  
+}
+
 add_filter( 'set_custom_brand', 'add_custom_brand', 10, 3 );
 function add_custom_brand($brand, $brand_class, $brand_title){
   $brand = '<a class="'.$brand_class.'" title="'.$brand_title.'" href="'.get_home_url().'">'.$brand.'</a>';

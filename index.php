@@ -1,8 +1,12 @@
 <?php
-get_header();
+	get_header();
 
-$primary_class = "col-12";
-$type = $affix = get_post_type();
+	$primary_class = "col-12";
+	$type = $affix = get_post_type();
+
+	if($type == 'post')
+		$affix = get_post_format();
+
 ?>
 <div class="container">
 	<?php if ( !is_front_page() ) do_action('breadcrumbs_from_yoast'); ?>
@@ -18,27 +22,25 @@ $type = $affix = get_post_type();
 		<div id="primary" class="<?php echo $primary_class; ?>">
 			<main id="main" role="main">
 			<?php
-			if(is_search()){
-				echo'
-				<header class="archive-header">
-					<h1>Результаты поиска: '. get_search_query().'</h1>
-				</header>';
-				$type = $affix = 'search';
-			}
 				if ( have_posts() ){
-					if( !is_front_page() && !is_search()){
-						the_template_archive_title();
-						the_archive_description( '<div class="taxonomy-description">', '</div>' );
+					if(is_search()){
+						echo'
+						<header class="archive-header">
+							<h1>Результаты поиска: '. get_search_query().'</h1>
+						</header>';
+
+						get_tpl_search_content();
+					}
+					else {
+						if( !is_front_page() ){
+							the_template_archive_title();
+							the_archive_description( '<div class="taxonomy-description">', '</div>' );
+						}
+
+						get_tpl_content( $type );
+
 					}
 
-					while ( have_posts() ) :
-						the_post();
-
-					if($type == 'post')
-						$affix = get_post_format();
-					
-					get_template_part( 'template-parts/content', $affix );
-					endwhile;
 					the_template_pagination();
 				}
 				else {
