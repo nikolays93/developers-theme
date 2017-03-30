@@ -3,6 +3,9 @@ get_header();
 
 $primary_class = "col-12";
 $type = $affix = get_post_type();
+
+if($type == 'post')
+	$affix = get_post_format();
 ?>
 <div class="container">
 	<?php if ( !is_front_page() ) do_action('breadcrumbs_from_yoast'); ?>
@@ -10,20 +13,14 @@ $type = $affix = get_post_type();
 		<?php
 		if ( $type=='post' && is_active_sidebar( 'archive' ) ){
 			$primary_class = "col-9";
-			echo '<div id="secondary" class="col-3">';
 			get_sidebar();
-			echo '</div>';
 		}
 		?>
 		<div id="primary" class="<?php echo $primary_class; ?>">
 			<main id="main" role="main">
 			<?php
-				the_post();
-
-				if($type == 'post')
-					$affix = get_post_format();
+				get_tpl_content( $affix );
 				
-				get_template_part( 'template-parts/content', $affix );
 				the_template_pagination();
 			?>
 			</main><!-- #main -->

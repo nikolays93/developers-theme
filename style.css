@@ -10,12 +10,36 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: seo18theme
 Tags: Start, Bootstrap, scss
 */
+.alignleft, .al {
+  display: inline;
+  float: left;
+  margin-right: 1.5em; }
+
+.alignright, .ar {
+  display: inline;
+  float: right;
+  margin-left: 1.5em; }
+
+.aligncenter, .ac {
+  clear: both;
+  display: block;
+  margin-left: auto;
+  margin-right: auto; }
+
+.custom.modal .close {
+  right: 5px;
+  top: 5px;
+  width: 20px;
+  position: absolute;
+  z-index: 55; }
+
 #primary .media-body {
   max-width: 100%; }
 
-ul.row {
-  list-style: none;
-  padding-left: 0; }
+.entry-content h1, .entry-content h2, .entry-content h3, .entry-content h4, .entry-content h5, .entry-content h6, .entry-content .h1, .entry-content .h2, .entry-content .h3, .entry-content .h4, .entry-content .h5, .entry-content .h6 {
+  color: #65abd0;
+  margin-top: 20px;
+  margin-bottom: 10px; }
 
 img {
   max-width: 100%;
@@ -24,10 +48,9 @@ img {
 img.full {
   max-width: auto !important; }
 
-.entry-content h1, .entry-content h2, .entry-content h3, .entry-content h4, .entry-content h5, .entry-content h6, .entry-content .h1, .entry-content .h2, .entry-content .h3, .entry-content .h4, .entry-content .h5, .entry-content .h6 {
-  color: #65abd0;
-  margin-top: 20px;
-  margin-bottom: 10px; }
+.clear-list, ul.row {
+  list-style: none;
+  padding-left: 0; }
 
 .no-underline, .no-underline:focus, .no-underline:hover {
   text-decoration: none; }
@@ -45,24 +68,10 @@ img.full {
   margin-bottom: 20px; }
 
 .hidden {
-  display: none;
-  /* Alignments (WP required) */ }
+  display: none; }
 
-.alignleft, .al {
-  display: inline;
-  float: left;
-  margin-right: 1.5em; }
-
-.alignright, .ar {
-  display: inline;
-  float: right;
-  margin-left: 1.5em; }
-
-.aligncenter, .ac {
-  clear: both;
-  display: block;
-  margin-left: auto;
-  margin-right: auto; }
+.two-columns {
+  columns: 2; }
 
 .col-2-4, .col-sm-2-4, .col-md-2-4, .col-lg-2-4 {
   position: relative;
@@ -88,6 +97,19 @@ img.full {
   .col-lg-2-4 {
     width: 20%;
     float: left; } }
+
+@media (min-width: 1200px) {
+  .sm {
+    padding-left: 90px;
+    padding-right: 90px; }
+
+  .sm.left {
+    padding-left: 0px;
+    padding-right: 180px; }
+
+  .sm.right {
+    padding-left: 180px;
+    padding-right: 0px; } }
 
 .navbar-default {
   width: 100%;
@@ -169,8 +191,3 @@ img.full {
       display: block;
       padding-left: 5px;
       padding-right: 5px; }
-
-@media (min-width: 1200px) {
-  .row.small {
-    padding-left: 90px;
-    padding-right: 90px; } }

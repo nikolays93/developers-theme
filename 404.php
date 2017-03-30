@@ -9,9 +9,7 @@ $primary_class = "col-12";
 		<?php
 		if ( is_active_sidebar( 'archive' ) ){
 			$primary_class = "col-9";
-			echo '<div id="secondary" class="col-3">';
 			get_sidebar();
-			echo '</div>';
 		}
 		?>
 		<div id="primary" class="<?php echo $primary_class; ?>">

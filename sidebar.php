@@ -7,8 +7,10 @@ add_action( 'after_sidebar',  'aside_end', 10 );
 
 function aside_start(){
 	echo '<aside class="widget-area" role="complementary">';
+	echo '<div id="secondary" class="col-3">';
 }
 function aside_end(){
+	echo '</div>';
 	echo '</aside>';
 }
 

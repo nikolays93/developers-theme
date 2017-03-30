@@ -12,18 +12,17 @@
 	<?php if ( !is_front_page() ) do_action('breadcrumbs_from_yoast'); ?>
 	<div class="row">
 		<?php
-		if ( $type=='post' && is_active_sidebar( 'archive' ) ){
+		if ( $type == 'post' && is_active_sidebar( 'archive' ) ){
 			$primary_class = "col-9";
-			echo '<div id="secondary" class="col-3">';
+			
 			get_sidebar();
-			echo '</div>';
 		}
 		?>
 		<div id="primary" class="<?php echo $primary_class; ?>">
 			<main id="main" role="main">
 			<?php
 				if ( have_posts() ){
-					if(is_search()){
+					if( is_search() ){
 						echo'
 						<header class="archive-header">
 							<h1>Результаты поиска: '. get_search_query().'</h1>
@@ -32,19 +31,19 @@
 						get_tpl_search_content();
 					}
 					else {
-						if( !is_front_page() ){
+						if( ! is_front_page() ){
 							the_template_archive_title();
 							the_archive_description( '<div class="taxonomy-description">', '</div>' );
 						}
 
-						get_tpl_content( $type );
+						get_tpl_content( $affix );
 
 					}
 
 					the_template_pagination();
 				}
 				else {
-					if( !is_front_page() )
+					if( ! is_front_page() )
 						get_template_part( 'template-parts/content', 'none' );
 				}
 			?>	
