@@ -6,12 +6,12 @@ add_action( 'before_sidebar', 'aside_start', 10 );
 add_action( 'after_sidebar',  'aside_end', 10 );
 
 function aside_start(){
-	echo '<aside class="widget-area" role="complementary">';
 	echo '<div id="secondary" class="col-3">';
+	echo '<aside class="widget-area" role="complementary">';
 }
 function aside_end(){
-	echo '</div>';
 	echo '</aside>';
+	echo '</div>';
 }
 
 do_action('before_sidebar');
