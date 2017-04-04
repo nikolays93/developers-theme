@@ -44,6 +44,7 @@
 	.sticky-wrapper.is-sticky>div:hover { opacity: 1; }
 	.sticky-wrapper>div { opacity: 1;transition: 0.5s ease;}
 }
+// @include transparent-sticky();
 
 // /* Alignments (WP required) */
 .alignleft, .al {
@@ -72,26 +73,28 @@
   z-index: 55;
 }
 
-#primary .media-body { max-width: 100%; }
-
-.entry-content {
-  h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
+#primary {
+  min-height: 450px;
+  .media-body { max-width: 100%; }
+  h1,h2,h3,h4,h5,h6 {
     color: $brand-primary;
     margin-top: 20px;
     margin-bottom: 10px;
   }
-}
+} 
 
 img { max-width: 100%; height: auto; }
 img.full { max-width: auto !important; }
 
-.clear-list, ul.row { @include clear-list(0); }
+.hidden { display: none; }
+
+.clear-list { @include clear-list('40px'); }
+ul.row { @include clear-list(0); }
 .no-underline { @include plain-hover-focus(){ text-decoration: none; } }
 .fll { float: left; }
 .flr { float: right; }
 .mb10 { margin-bottom: 10px; }
 .mb20 { margin-bottom: 20px; }
-.hidden { display: none; }
 .two-columns { columns: 2; }
 
 // 5 columns on row

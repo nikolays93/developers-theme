@@ -13,13 +13,14 @@
 			<div class="row head-info">
 				<div class="col-4 logotype"><?php the_custom_logo(); ?></div>
 				<div class="col-4">
-					<?php echo get_company_info('address'); ?>
+					<?php echo do_shortcode('[our_address]'); ?>
 				</div>
 				<div class="col-4">
-					<?php echo get_company_info('numbers'); ?>
-					<?php echo get_company_info('email'); ?>
-					<?php echo get_company_info('work-time'); ?>
-					<?php echo get_company_info('socials'); ?>
+					<?php echo do_shortcode('[our_numbers]'); ?>
+					<?php echo do_shortcode('[our_email]'); ?>
+					<?php echo do_shortcode('[our_time_work]'); ?>
+					<?php echo do_shortcode('[our_socials]'); ?>
+					<?php // echo get_company_first_number(); ?>
 				</div>
 			</div><!--.row head-info-->
 		</div>

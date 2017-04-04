@@ -65,8 +65,12 @@ function add_theme_assets() {
 }
 add_action( 'wp_enqueue_scripts', 'add_theme_assets', 999 );
 
-require_once get_template_directory() . '/include/functions-template.php';
-require_once get_template_directory() . '/include/functions-bootstrap.php';
+require_once get_template_directory() . '/include/tpl.php';
+require_once get_template_directory() . '/include/tpl-titles.php';
+require_once get_template_directory() . '/include/tpl-bootstrap.php';
+require_once get_template_directory() . '/include/tpl-gallery.php';
+require_once get_template_directory() . '/include/tpl-navigation.php';
+
 require_once get_template_directory() . '/include/customizer.php';
 require_once get_template_directory() . '/include/functions-custom.php';
 if(function_exists('is_woocommerce'))

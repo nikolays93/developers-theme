@@ -135,8 +135,8 @@ class themeCustomizer {
         )
       );
 
-    $wp_customize->add_setting('company_work_time');
-    $wp_customize->add_control('company_work_time',
+    $wp_customize->add_setting('company_time_work');
+    $wp_customize->add_control('company_time_work',
       array(
         'type'     => 'textarea',
         'label'    => 'Режим работы',
