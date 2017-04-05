@@ -1,47 +1,55 @@
 <?php
 /**
- * Получить заголовок записи (Если установлен плагин developer_page получить дополнительное имя)
+ * Get HTML Title (Second Title if exists)
  */
-function get_advanced_title(
-  $post_id = null, // ID поста заголовок которого нужно вывести
-  $clear = false, // Возвращает заголовок без <h> тега
-  $force_single = false // возвращает как single заголовок принудительно
-  ){
-  if(is_404())
-    return '<h1 class="error_not_found">Ошибка #404: страница не найдена.</h1>';
+function get_advanced_title( $post_id = null, $args = array() ){
+  $singular = ( isset($args['force_single']) || is_singular() ) ? true : false;
+  $defaults = array(
+    'title_tag' => $singular ? 'h1' : 'h2',
+    'title_class' => 'post-title',
+    'clear' => false,
+    );
+  $tag = (isset($args['title_tag'])) ? $args['title_tag'] : $defaults['title_tag'];
+  $args = array_merge($defaults, $args);
 
+  if(is_404())
+    return "<{$tag} class='{$args['title_class']} error_not_found'> Ошибка #404: страница не найдена. </{$tag}>";
+
+  /**
+   * Get Title
+   */
   if(function_exists('get_second_title'))
     $title = get_second_title($post_id);
 
-  if(empty($title))
+  if( empty($title) )
     $title = get_the_title($post_id);
-
+  
+  /**
+   * Get Edit Post Icon
+   */
   $edit_link = get_edit_post_link($post_id);
-  $edit_class = 'dashicons dashicons-welcome-write-blog no-underline';
-  $edit_tpl = ' <object><a style="position: absolute;" class="'.$edit_class.'" href="' . $edit_link . '"></a></object>';
+  $edit_attrs = ' class=\'dashicons dashicons-welcome-write-blog no-underline\'';
+  $edit_tpl = " <object><a style='position: absolute;' href='{$edit_link}'{$edit_attrs}></a></object>";
 
-  if(!empty($title)){
-    if($clear)
+  /**
+   * Get Title Template
+   */
+  if( $title ){
+    if($args['clear'])
       return $title . $edit_tpl;
 
-    if( $force_single || is_singular() ){
-      return  '<h1 class="post-title">'. $title . $edit_tpl .'</h1>';
-    }
-    else {
-      return '<a href="'. get_permalink() .'"><h2 class="post-title">'.$title.$edit_tpl.'</h2></a>';
-    }
+    $link = ( $singular ) ? array('', '') : array('<a href="'.get_permalink( $post_id ).'">', '</a>');
+    $result = $link[0]."<{$tag} class='{$args['title_class']}'>".$title.$edit_tpl."</{$tag}>".$link[1];
+
+    return $result;
   }
-  // Если все же не удалось получить title
+  // Title Not Found
   return false;
 }
-function the_advanced_title(
-  $before = '',
-  $after = '',
-  $post_id = null,
-  $clear = false,
-  $force_single = false
-  ){
-  echo $before . get_advanced_title($post_id, $clear, $force_single) . $after;
+
+function the_advanced_title( $before = '', $after = '', $post_id = null, $args = array() ){
+  if( $title = get_advanced_title($post_id, $args) )
+    echo $before . $title . $after;
   return;
 }
 
