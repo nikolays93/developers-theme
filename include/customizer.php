@@ -43,7 +43,7 @@ class themeCustomizer {
         )
       );
 
-    $wp_customize->add_setting('responsive', array('default'   => false));
+    $wp_customize->add_setting('site-mode', array('default'   => false));
     $wp_customize->add_control(
       'site-mode',
       array(
@@ -54,13 +54,24 @@ class themeCustomizer {
         )
       );
 
-    $wp_customize->add_setting('use_scss', array('default'   => ''));
+    $wp_customize->add_setting('use_bootstrap', array('default'   => ''));
     $wp_customize->add_control(
-      'use_scss',
+      'use_bootstrap',
       array(
         'section'  => 'display_options',
-        'label'    => 'Использовать Scss предпроцессор (Только от имени админ-а)',
-        'description' => 'После изменения стилей обновите страницу, чтобы предпроцессор скомпилировал стили. Прежде отключения удалите style.css, а assets/style.css переместите вместо него.',
+        'label'    => 'Подключить Bootstrap стили',
+        'description' => '',
+        'type'     => 'checkbox',
+        )
+      );
+
+    $wp_customize->add_setting('use_bootstrap_js', array('default'   => ''));
+    $wp_customize->add_control(
+      'use_bootstrap_js',
+      array(
+        'section'  => 'display_options',
+        'label'    => 'Использовать Bootstrap скрипты',
+        'description' => '',
         'type'     => 'checkbox',
         )
       );
