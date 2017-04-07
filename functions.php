@@ -72,7 +72,7 @@ function add_theme_assets() {
 	}
 
     // wp_enqueue_style( 'style', get_stylesheet_uri(), array(), '1.0', 'all' );
-	wp_enqueue_script('common-js', $tpl_uri . '/assets/js/common.js', array('jquery'), '1.0', true);
+	wp_enqueue_script('common-js', $tpl_uri . '/assets/common.js', array('jquery'), '1.0', true);
 }
 add_action( 'wp_enqueue_scripts', 'add_theme_assets', 999 );
 
