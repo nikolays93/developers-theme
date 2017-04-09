@@ -1,11 +1,25 @@
 <?php
 if ( ! defined( 'ABSPATH' ) )    exit; // Exit if accessed directly
 
+/**
+ * Set Filters
+ */
+remove_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 20);
+
+remove_action( 'woocommerce_before_shop_loop', 'woocommerce_result_count', 20 );
+remove_action( 'woocommerce_before_shop_loop', 'woocommerce_catalog_ordering', 30 );
+
+// add_filter( 'add_content_link', '__return_true' );
+
+add_filter('woocommerce_placeholder_img_src', 'placeholder_img_src');
+function placeholder_img_src( $src ) {
+	return get_template_directory_uri() . '/img/placeholder.png';
+}
+
 // Добавляем поддержку WooCommerce
-function woocommerce_support() {
+add_action( 'after_setup_theme', function(){
 	add_theme_support( 'woocommerce' );
-	}
-add_action( 'after_setup_theme', 'woocommerce_support' );
+} );
 
 // Меняем символ рубля (так как он работает не корректно на некоторых системах)
 function change_currency_symbol( $currency_symbol, $currency ) {
@@ -22,8 +36,14 @@ add_filter('woocommerce_currency_symbol', 'change_currency_symbol', 10, 2);
 
 // Вносим изменения в табы
 function woo_change_tabs( $tabs ) {
-	if(isset($tabs['description']))
-		$tabs['description']['title'] = 'Описание товара';
+	global $post;
+
+	if(isset($post->post_content) && strlen($post->post_content) < 55){
+		unset($tabs['description']);
+	} else {
+		if(isset($tabs['description']))
+			$tabs['description']['title'] = 'Описание товара';
+	}
 
 	if(isset($tabs['reviews']))
 		unset( $tabs['reviews'] );
@@ -157,9 +177,9 @@ function change_product_labels() {
 	global $wp_post_types;
 
 	$label = $wp_post_types['product']->label = get_theme_mod( 'woo_product_label', 'Каталог' );
-	$wp_post_types['product']->labels->name = $label;
+	$wp_post_types['product']->labels->name      = $label;
 	$wp_post_types['product']->labels->all_items = $label;
-	$wp_post_types['product']->labels->archives = $label;
+	$wp_post_types['product']->labels->archives  = $label;
 	$wp_post_types['product']->labels->menu_name = $label;
 	}
 add_action( 'init', 'change_product_labels' );
@@ -253,5 +273,5 @@ function print_wc_settings( $wp_customize ){
     		'type'        => 'checkbox',
     		)
     	);
-}
+	}
 add_action( 'customize_register', 'print_wc_settings' );

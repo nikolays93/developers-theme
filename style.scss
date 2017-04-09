@@ -3,7 +3,7 @@ Theme Name: WP dev's theme
 Author: NikolayS93
 Author URI: //vk.com/nikolays_93
 Description: Starter page for cool developers.
-Version: 2.1.0
+Version: 3.0
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: developers-theme
@@ -11,8 +11,6 @@ Tags: Start, Start-Theme, Developers-Theme, Creative-Developers, Bootstrap, Scss
 */
 
 ///*
-// * Внимание! Warning! Achtung!
-// *
 // * Для компиляции этого файла: Зайдите под администратором и обновите любую front страницу
 // * Refresh any front page with logged in user for compile
 // */
@@ -115,31 +113,35 @@ Tags: Start, Start-Theme, Developers-Theme, Creative-Developers, Bootstrap, Scss
 
 // /* Woocommerce */
 .row.products {
-  .first {
-    clear: both;
-  }
-  .card {
+  .product {
     margin-bottom: 20px;
-  }
-  
-  // /* product */
-  .product-thumbnail {
-    background-repeat: no-repeat;
-    background-position: center;
-    height: 120px;
-    .onsale {
-      position: absolute;
-      left: 5%;
-      top: 1rem;
-      line-height: 16px;
+    .product-thumbnail {
+      .onsale {
+        position: absolute;
+        left: 5%;
+        top: 1rem;
+        line-height: 16px;
+      }
+    }
+    h2 {
+      font-size: 18px;
+      margin-top: 0;
+    }
+    .price {
+      display: block;
     }
   }
   
   .product-category {
+    margin-bottom: 20px;
     .cat-thumbnail {
       background-repeat: no-repeat;
       background-position: center;
       height: 150px;
+    }
+    h2 {
+      font-size: 18px;
+      margin-top: 0;
     }
   }
   

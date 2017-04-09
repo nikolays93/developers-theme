@@ -1,8 +1,6 @@
 <?php
-// Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+if ( ! defined( 'ABSPATH' ) )
+	exit; // Exit if accessed directly
 ?>
 <form role="search" method="get" class="woocommerce-product-search" id="searchform" action="<?php echo home_url( '/' ) ?>" >
 	<div class="input-group">

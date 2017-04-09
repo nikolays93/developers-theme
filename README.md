@@ -1,6 +1,8 @@
 # Developer's starter theme #
 
 ## Release notes ##
+3.0.1
+- re write woocommerce template
 
 2.2.1
 - Change title templates

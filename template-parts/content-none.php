@@ -11,4 +11,4 @@
 		}
 		?>
 	</div><!-- .entry-content -->
-</article><!-- #post-## -->
+</article>

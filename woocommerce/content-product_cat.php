@@ -1,7 +1,6 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
+if ( ! defined( 'ABSPATH' ) )
 	exit;
-}
 
 $columns = wp_woo_shop_columns(null, true);
 $non_responsive = get_theme_mod( 'site-format' );
@@ -16,7 +15,9 @@ $thumbnail_url = ($thumbnail_id != 0) ?
 <li <?php wc_product_cat_class( $post_classes, $category ); ?>>
 	<div class="card">
 		<?php woocommerce_template_loop_category_link_open($category); ?>
-			<div class="cat-thumbnail" style="background-image: url(<?=$thumbnail_url?>);"></div>
+			<div class="cat-thumbnail">
+				<?php do_action( 'woocommerce_before_subcategory_title', $category ); ?>
+			</div>
 			<div class="card-block">
 				<?php
 				do_action( 'woocommerce_shop_loop_subcategory_title', $category );

@@ -4,7 +4,7 @@ get_header();
 $primary_class = "col-12";
 ?>
 <div class="container">
-	<?php do_action('breadcrumbs_from_yoast'); ?>
+	<?php breadcrumbs_from_yoast(); ?>
 	<div class="row">
 		<?php
 		if ( is_active_sidebar( 'archive' ) ){

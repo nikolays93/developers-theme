@@ -57,7 +57,7 @@ function the_advanced_title( $before = '', $after = '', $post_id = null, $args =
  * Получить заголовок архива (отличие от стандартной функции:
  * не выводит "Категория:" или "Архивы:" )
  */
-function get_template_archive_title() {
+function get_advanced_archive_title() {
   if ( is_category() ) {
     $title = single_cat_title( '', false );
   } elseif ( is_tag() ) {
@@ -103,11 +103,11 @@ function get_template_archive_title() {
 
   return $title;
 }
-function the_template_archive_title(
+function the_advanced_archive_title(
   $before='',
   $after='') {
 
-  $title = get_template_archive_title();
+  $title = get_advanced_archive_title();
   if(!empty($title)){
     echo $before .'<h1 class="archive-title">'. $title .'</h1>'. $after;
     return true;
