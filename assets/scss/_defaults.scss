@@ -101,6 +101,13 @@ ul.row { @include clear-list(0); }
 .mb20 { margin-bottom: 20px !important; }
 .two-columns { columns: 2; }
 
+input[type="number"]{
+  width: 80px;
+  padding: 4px;
+  padding-left: 10px;
+  line-height: 26px;
+}
+
 // 5 columns on row
 .col-2-4,
 .col-sm-2-4,

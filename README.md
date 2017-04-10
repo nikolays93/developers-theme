@@ -1,6 +1,9 @@
 # Developer's starter theme #
 
 ## Release notes ##
+3.0.2
+- fix number inputs (inc. qty)
+
 3.0.1
 - re write woocommerce template
 
