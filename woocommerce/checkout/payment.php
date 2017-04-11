@@ -1,29 +1,13 @@
 <?php
-/**
- * Checkout Payment Section
- *
- * This template can be overridden by copying it to yourtheme/woocommerce/checkout/payment.php.
- *
- * HOWEVER, on occasion WooCommerce will need to update template files and you
- * (the theme developer) will need to copy the new files to your theme to
- * maintain compatibility. We try to do this as little as possible, but it does
- * happen. When this occurs the version of the template file will be bumped and
- * the readme will list any important changes.
- *
- * @see 	    https://docs.woocommerce.com/document/template-structure/
- * @author 		WooThemes
- * @package 	WooCommerce/Templates
- * @version     2.5.0
- */
-if ( ! defined( 'ABSPATH' ) ) {
+
+if ( ! defined( 'ABSPATH' ) )
 	exit;
-}
 
 if ( ! is_ajax() ) {
 	do_action( 'woocommerce_review_order_before_payment' );
 }
 ?>
-<div id="payment" class="woocommerce-checkout-payment">
+<div id="payment" class="woocommerce-checkout-payment col-7">
 	<?php if ( WC()->cart->needs_payment() ) : ?>
 		<ul class="wc_payment_methods payment_methods methods">
 			<?php

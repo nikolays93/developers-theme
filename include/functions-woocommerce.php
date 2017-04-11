@@ -78,6 +78,75 @@ function init_woocommerce_sidebar(){
 	}
 add_action( 'widgets_init', 'init_woocommerce_sidebar' );
 
+function sort_checkout_fields(){
+
+}
+function custom_wc_checkout_fields( $fields ) {
+	// $fields['billing']['billing_email']['priority'] = 5;
+	// $fields['billing']['billing_phone']['priority'] = 7;
+	$fields['billing']['billing_first_name']['required'] = false;
+	$fields['billing']['billing_last_name']['required'] = false;
+	$fields['billing']['billing_state']['required'] = false;
+	$fields['billing']['billing_city']['required'] = false;
+	$fields['billing']['billing_address_1']['required'] = false;
+	$fields['billing']['billing_postcode']['required'] = false;
+
+	unset( $fields['billing']['billing_address_2'] );
+	unset( $fields['billing']['billing_country'] );
+
+	$fields['shipping']['shipping_first_name']['required'] = false;
+	$fields['shipping']['shipping_last_name']['required'] = false;
+	$fields['shipping']['shipping_state']['required'] = false;
+	$fields['shipping']['shipping_postcode']['required'] = false;
+	unset( $fields['shipping']['shipping_address_2'] );
+	unset($fields['shipping']['shipping_country']);
+
+	$show_more = array(
+		'type'              => 'checkbox',
+		'label'             => 'Показать дополнительные, не обязательные поля',
+		'description'       => '',
+		'custom_attributes' => array(
+			'data-target' => '.woocommerce-billing-fields #billing_last_name_field, .woocommerce-billing-fields #billing_company_field, .woocommerce-billing-fields #billing_state_field, .woocommerce-billing-fields #billing_city_field, .woocommerce-billing-fields #billing_address_1_field, .woocommerce-billing-fields #billing_postcode_field',
+			'data-action' => 'fadeToggle',
+			'data-load-action' => 'fadeOut',
+			'data-trigger' => 'change',
+			),
+		);
+
+	$filtred_fields = array();
+	$filtred_fields['billing']['billing_email']      = $fields['billing']['billing_email'];
+	$filtred_fields['billing']['billing_phone']      = $fields['billing']['billing_phone'];
+	$filtred_fields['billing']['billing_first_name'] = $fields['billing']['billing_first_name'];
+	$filtred_fields['billing']['billing_show_more']  = $show_more;
+	$filtred_fields['billing']['billing_last_name']  = $fields['billing']['billing_last_name'];
+	$filtred_fields['billing']['billing_company']    = $fields['billing']['billing_company'];
+	$filtred_fields['billing']['billing_state']      = $fields['billing']['billing_state'];
+	$filtred_fields['billing']['billing_city']       = $fields['billing']['billing_city'];
+	$filtred_fields['billing']['billing_address_1']  = $fields['billing']['billing_address_1'];
+	$filtred_fields['billing']['billing_postcode']   = $fields['billing']['billing_postcode'];
+
+	$filtred_fields['shipping']['shipping_first_name'] = $fields['shipping']['shipping_first_name'];
+	$filtred_fields['shipping']['shipping_last_name']  = $fields['shipping']['shipping_last_name'];
+	$filtred_fields['shipping']['shipping_company']    = $fields['shipping']['shipping_company'];
+	$filtred_fields['shipping']['shipping_state']      = $fields['shipping']['shipping_state'];
+	$filtred_fields['shipping']['shipping_city']       = $fields['shipping']['shipping_city'];
+	$filtred_fields['shipping']['shipping_address_1']  = $fields['shipping']['shipping_address_1'];
+	$filtred_fields['shipping']['shipping_postcode']   = $fields['shipping']['shipping_postcode'];
+
+	$filtred_fields['account'] = $fields['account'];
+	$filtred_fields['order'] = $fields['order'];
+
+	foreach ($filtred_fields as &$section) {
+		foreach ($section as &$input) {
+			if( !isset($input['type']) || isset($input['type']) && $input['type'] != 'checkbox' )
+				$input['input_class'][] = 'form-control';
+		}
+	}
+
+	return $filtred_fields;
+	}
+add_filter( 'woocommerce_checkout_fields' , 'custom_wc_checkout_fields' );
+
 // Используем формат цены вариативного товара WC 2.0
 function wc_wc20_variation_price_format( $price, $product ) {
     $prices = array(
