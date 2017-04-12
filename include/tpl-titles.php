@@ -47,10 +47,12 @@ function get_advanced_title( $post_id = null, $args = array() ){
   return false;
 }
 
-function the_advanced_title( $before = '', $after = '', $post_id = null, $args = array() ){
+function the_advanced_title( $post_id = null, $args = array() ){
+  $before = isset($args['before']) ? $args['before'] : '';
+  $after = isset($args['after']) ? $args['after'] : '';
+
   if( $title = get_advanced_title($post_id, $args) )
     echo $before . $title . $after;
-  return;
 }
 
 /**

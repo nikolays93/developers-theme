@@ -1,6 +1,9 @@
 # Developer's starter theme #
 
 ## Release notes ##
+3.1.2
+- fix the advanced titles
+
 3.1.1
 - fix data-options.js 
 
