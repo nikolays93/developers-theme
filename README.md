@@ -1,6 +1,9 @@
 # Developer's starter theme #
 
 ## Release notes ##
+3.1.1
+- fix data-options.js 
+
 3.1.0
 - add woocommerce templates and change common.js
 
