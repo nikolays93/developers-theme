@@ -67,12 +67,12 @@ function add_custom_brand($brand, $brand_class, $brand_title){
 /**
  * yoast крошки ( Для активации установить/активировать плагин, дополнительно => breadcrumbs => enable )
  */
-add_action('breadcrumbs_from_yoast', function(){
+function breadcrumbs_from_yoast(){
   if ( function_exists('yoast_breadcrumb') ) {
     yoast_breadcrumb('<p id="breadcrumbs">','</p>');
   }
-});
-
+}
+add_action( 'woocommerce_before_main_content', 'breadcrumbs_from_yoast', 25 );
 
 /**
  * Принятые настройки постраничной навигации

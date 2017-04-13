@@ -1,7 +1,6 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
+if ( ! defined( 'ABSPATH' ) )
 	exit; // Exit if accessed directly
-}
 ?>
 
 <?php
@@ -18,20 +17,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 	 }
 ?>
 
-<div itemscope itemtype="<?php echo woocommerce_get_product_schema(); ?>" id="product-<?php the_ID(); ?>" <?php post_class('row'); ?>>
-	
-	<div id="secondary" class="col-5">
-	<?php
-		/**
-		 * woocommerce_before_single_product_summary hook.
-		 *
-		 * @hooked woocommerce_show_product_sale_flash - 10
-		 * @hooked woocommerce_show_product_images - 20
-		 */
-		do_action( 'woocommerce_before_single_product_summary' );
-	?>
-	</div><!-- .col -->
-	<div id="primary" class="col-7">
+<div id="product-<?php the_ID(); ?>" <?php post_class('row'); ?>>
+	<div class="col-4">
+		<?php
+			/**
+			 * woocommerce_before_single_product_summary hook.
+			 *
+			 * @hooked woocommerce_show_product_sale_flash - 10
+			 * @hooked woocommerce_show_product_images - 20
+			 */
+			do_action( 'woocommerce_before_single_product_summary' );
+		?>
+	</div>
+
+	<div id="primary" class="summary entry-summary col-8">
 		<?php
 			/**
 			 * woocommerce_single_product_summary hook.
@@ -43,13 +42,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 			 * @hooked woocommerce_template_single_add_to_cart - 30
 			 * @hooked woocommerce_template_single_meta - 40
 			 * @hooked woocommerce_template_single_sharing - 50
+			 * @hooked WC_Structured_Data::generate_product_data() - 60
 			 */
-			remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_meta', 40 );
 			do_action( 'woocommerce_single_product_summary' );
 		?>
+	</div><!-- .summary -->
+</div><!-- #product-<?php the_ID(); ?> -->
 
-	</div><!-- .col -->
-	<div class="col-12">
+<div class="related-products">
 	<?php
 		/**
 		 * woocommerce_after_single_product_summary hook.
@@ -60,9 +60,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 		 */
 		do_action( 'woocommerce_after_single_product_summary' );
 	?>
-	</div><!-- .col -->
-	<meta itemprop="url" content="<?php the_permalink(); ?>" />
-
-</div><!-- #product-<?php the_ID(); ?>.row -->
+</div>
 
 <?php do_action( 'woocommerce_after_single_product' ); ?>

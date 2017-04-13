@@ -8,7 +8,7 @@ if($type == 'post')
 	$affix = get_post_format();
 ?>
 <div class="container">
-	<?php if ( !is_front_page() ) do_action('breadcrumbs_from_yoast'); ?>
+	<?php if ( !is_front_page() ) breadcrumbs_from_yoast(); ?>
 	<div class="row">
 		<?php
 		if ( $type=='post' && is_active_sidebar( 'archive' ) ){

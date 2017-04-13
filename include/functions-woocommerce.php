@@ -1,11 +1,25 @@
 <?php
 if ( ! defined( 'ABSPATH' ) )    exit; // Exit if accessed directly
 
+/**
+ * Set Filters
+ */
+remove_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 20);
+
+remove_action( 'woocommerce_before_shop_loop', 'woocommerce_result_count', 20 );
+remove_action( 'woocommerce_before_shop_loop', 'woocommerce_catalog_ordering', 30 );
+
+// add_filter( 'add_content_link', '__return_true' );
+
+add_filter('woocommerce_placeholder_img_src', 'placeholder_img_src');
+function placeholder_img_src( $src ) {
+	return get_template_directory_uri() . '/img/placeholder.png';
+}
+
 // Добавляем поддержку WooCommerce
-function woocommerce_support() {
+add_action( 'after_setup_theme', function(){
 	add_theme_support( 'woocommerce' );
-	}
-add_action( 'after_setup_theme', 'woocommerce_support' );
+} );
 
 // Меняем символ рубля (так как он работает не корректно на некоторых системах)
 function change_currency_symbol( $currency_symbol, $currency ) {
@@ -22,8 +36,14 @@ add_filter('woocommerce_currency_symbol', 'change_currency_symbol', 10, 2);
 
 // Вносим изменения в табы
 function woo_change_tabs( $tabs ) {
-	if(isset($tabs['description']))
-		$tabs['description']['title'] = 'Описание товара';
+	global $post;
+
+	if(isset($post->post_content) && strlen($post->post_content) < 55){
+		unset($tabs['description']);
+	} else {
+		if(isset($tabs['description']))
+			$tabs['description']['title'] = 'Описание товара';
+	}
 
 	if(isset($tabs['reviews']))
 		unset( $tabs['reviews'] );
@@ -57,6 +77,75 @@ function init_woocommerce_sidebar(){
 		) );
 	}
 add_action( 'widgets_init', 'init_woocommerce_sidebar' );
+
+function sort_checkout_fields(){
+
+}
+function custom_wc_checkout_fields( $fields ) {
+	// $fields['billing']['billing_email']['priority'] = 5;
+	// $fields['billing']['billing_phone']['priority'] = 7;
+	$fields['billing']['billing_first_name']['required'] = false;
+	$fields['billing']['billing_last_name']['required'] = false;
+	$fields['billing']['billing_state']['required'] = false;
+	$fields['billing']['billing_city']['required'] = false;
+	$fields['billing']['billing_address_1']['required'] = false;
+	$fields['billing']['billing_postcode']['required'] = false;
+
+	unset( $fields['billing']['billing_address_2'] );
+	unset( $fields['billing']['billing_country'] );
+
+	$fields['shipping']['shipping_first_name']['required'] = false;
+	$fields['shipping']['shipping_last_name']['required'] = false;
+	$fields['shipping']['shipping_state']['required'] = false;
+	$fields['shipping']['shipping_postcode']['required'] = false;
+	unset( $fields['shipping']['shipping_address_2'] );
+	unset($fields['shipping']['shipping_country']);
+
+	$show_more = array(
+		'type'              => 'checkbox',
+		'label'             => 'Показать дополнительные, не обязательные поля',
+		'description'       => '',
+		'custom_attributes' => array(
+			'data-target' => '.woocommerce-billing-fields #billing_last_name_field, .woocommerce-billing-fields #billing_company_field, .woocommerce-billing-fields #billing_state_field, .woocommerce-billing-fields #billing_city_field, .woocommerce-billing-fields #billing_address_1_field, .woocommerce-billing-fields #billing_postcode_field',
+			'data-action' => 'fadeToggle',
+			'data-load-action' => 'fadeOut',
+			'data-trigger' => 'change',
+			),
+		);
+
+	$filtred_fields = array();
+	$filtred_fields['billing']['billing_email']      = $fields['billing']['billing_email'];
+	$filtred_fields['billing']['billing_phone']      = $fields['billing']['billing_phone'];
+	$filtred_fields['billing']['billing_first_name'] = $fields['billing']['billing_first_name'];
+	$filtred_fields['billing']['billing_show_more']  = $show_more;
+	$filtred_fields['billing']['billing_last_name']  = $fields['billing']['billing_last_name'];
+	$filtred_fields['billing']['billing_company']    = $fields['billing']['billing_company'];
+	$filtred_fields['billing']['billing_state']      = $fields['billing']['billing_state'];
+	$filtred_fields['billing']['billing_city']       = $fields['billing']['billing_city'];
+	$filtred_fields['billing']['billing_address_1']  = $fields['billing']['billing_address_1'];
+	$filtred_fields['billing']['billing_postcode']   = $fields['billing']['billing_postcode'];
+
+	$filtred_fields['shipping']['shipping_first_name'] = $fields['shipping']['shipping_first_name'];
+	$filtred_fields['shipping']['shipping_last_name']  = $fields['shipping']['shipping_last_name'];
+	$filtred_fields['shipping']['shipping_company']    = $fields['shipping']['shipping_company'];
+	$filtred_fields['shipping']['shipping_state']      = $fields['shipping']['shipping_state'];
+	$filtred_fields['shipping']['shipping_city']       = $fields['shipping']['shipping_city'];
+	$filtred_fields['shipping']['shipping_address_1']  = $fields['shipping']['shipping_address_1'];
+	$filtred_fields['shipping']['shipping_postcode']   = $fields['shipping']['shipping_postcode'];
+
+	$filtred_fields['account'] = $fields['account'];
+	$filtred_fields['order'] = $fields['order'];
+
+	foreach ($filtred_fields as &$section) {
+		foreach ($section as &$input) {
+			if( !isset($input['type']) || isset($input['type']) && $input['type'] != 'checkbox' )
+				$input['input_class'][] = 'form-control';
+		}
+	}
+
+	return $filtred_fields;
+	}
+add_filter( 'woocommerce_checkout_fields' , 'custom_wc_checkout_fields' );
 
 // Используем формат цены вариативного товара WC 2.0
 function wc_wc20_variation_price_format( $price, $product ) {
@@ -157,9 +246,9 @@ function change_product_labels() {
 	global $wp_post_types;
 
 	$label = $wp_post_types['product']->label = get_theme_mod( 'woo_product_label', 'Каталог' );
-	$wp_post_types['product']->labels->name = $label;
+	$wp_post_types['product']->labels->name      = $label;
 	$wp_post_types['product']->labels->all_items = $label;
-	$wp_post_types['product']->labels->archives = $label;
+	$wp_post_types['product']->labels->archives  = $label;
 	$wp_post_types['product']->labels->menu_name = $label;
 	}
 add_action( 'init', 'change_product_labels' );
@@ -253,5 +342,5 @@ function print_wc_settings( $wp_customize ){
     		'type'        => 'checkbox',
     		)
     	);
-}
+	}
 add_action( 'customize_register', 'print_wc_settings' );

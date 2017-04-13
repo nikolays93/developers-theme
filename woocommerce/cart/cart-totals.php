@@ -1,33 +1,15 @@
 <?php
-/**
- * Cart totals
- *
- * This template can be overridden by copying it to yourtheme/woocommerce/cart/cart-totals.php.
- *
- * HOWEVER, on occasion WooCommerce will need to update template files and you
- * (the theme developer) will need to copy the new files to your theme to
- * maintain compatibility. We try to do this as little as possible, but it does
- * happen. When this occurs the version of the template file will be bumped and
- * the readme will list any important changes.
- *
- * @see 	    https://docs.woocommerce.com/document/template-structure/
- * @author 		WooThemes
- * @package 	WooCommerce/Templates
- * @version     2.3.6
- */
-
-if ( ! defined( 'ABSPATH' ) ) {
+if ( ! defined( 'ABSPATH' ) )
 	exit;
-}
 
 ?>
-<div class="cart_totals <?php if ( WC()->customer->has_calculated_shipping() ) echo 'calculated_shipping'; ?>">
+<div class="col-5 float-right cart_totals <?php if ( WC()->customer->has_calculated_shipping() ) echo 'calculated_shipping'; ?>">
 
 	<?php do_action( 'woocommerce_before_cart_totals' ); ?>
 
-	<h2><?php _e( 'Cart Totals', 'woocommerce' ); ?></h2>
+	<h2><?php _e( 'Cart totals', 'woocommerce' ); ?></h2>
 
-	<table cellspacing="0" class="shop_table shop_table_responsive">
+	<table cellspacing="0" class="table shop_table shop_table_responsive" style="width: 400px;">
 
 		<tr class="cart-subtotal">
 			<th><?php _e( 'Subtotal', 'woocommerce' ); ?></th>
@@ -68,7 +50,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php if ( wc_tax_enabled() && 'excl' === WC()->cart->tax_display_cart ) :
 			$taxable_address = WC()->customer->get_taxable_address();
 			$estimated_text  = WC()->customer->is_customer_outside_base() && ! WC()->customer->has_calculated_shipping()
-					? sprintf( ' <small>(' . __( 'estimated for %s', 'woocommerce' ) . ')</small>', WC()->countries->estimated_for_prefix( $taxable_address[0] ) . WC()->countries->countries[ $taxable_address[0] ] )
+					? sprintf( ' <small>' . __( '(estimated for %s)', 'woocommerce' ) . '</small>', WC()->countries->estimated_for_prefix( $taxable_address[0] ) . WC()->countries->countries[ $taxable_address[0] ] )
 					: '';
 
 			if ( 'itemized' === get_option( 'woocommerce_tax_total_display' ) ) : ?>
