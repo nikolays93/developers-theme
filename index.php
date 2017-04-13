@@ -32,7 +32,7 @@
 					}
 					else {
 						if( ! is_front_page() ){
-							the_template_archive_title();
+							the_advanced_archive_title();
 							the_archive_description( '<div class="taxonomy-description">', '</div>' );
 						}
 
