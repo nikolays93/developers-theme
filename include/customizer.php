@@ -263,6 +263,8 @@ function get_company_info( $field, $filter = 'the_content' ){
     return false;
 
   $info = get_theme_mod( 'company_' . $field );
+  if( ! $info )
+    return false;
 
   if( $filter )
     return apply_filters( $filter, $info);

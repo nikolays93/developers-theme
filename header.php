@@ -16,10 +16,10 @@
 					<?php echo do_shortcode('[our_address]'); ?>
 				</div>
 				<div class="col-4">
-					<?php echo do_shortcode('[our_numbers]'); ?>
-					<?php echo do_shortcode('[our_email]'); ?>
-					<?php echo do_shortcode('[our_time_work]'); ?>
-					<?php echo do_shortcode('[our_socials]'); ?>
+					<?php // echo do_shortcode('[our_numbers]'); ?>
+					<?php // echo do_shortcode('[our_email]'); ?>
+					<?php // echo do_shortcode('[our_time_work]'); ?>
+					<?php // echo do_shortcode('[our_socials]'); ?>
 					<?php // echo get_company_first_number(); ?>
 				</div>
 			</div><!--.row head-info-->
