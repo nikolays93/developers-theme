@@ -39,57 +39,41 @@ Tags: Start, Start-Theme, Developers-Theme, Creative-Developers, Bootstrap, Scss
   margin-bottom: 20px;
   padding: 0;
   border-radius: 0;
-  .navbar-brand,
-  .navbar-toggler {
-    @include hover-focus {
-      color: #000;
-    }
-  }
   .navbar-nav {
-    .nav-item+.nav-item {
-      margin-left: 0;
-    }   
     .nav-link {
       padding: 10px 15px;
-      @include hover-focus() {
-        color: lighten(#000, 20%);
+      @include plain-hover-focus() {
+        color: #000;
       }
     }
     .current-menu-ancestor > .nav-link,
     .active > .nav-link,
-    .nav-link.active {}
+    .nav-link.active {
 
-    .open > .nav-link,
-    .nav-link.open {
-      @include hover-focus() {
-        color: darken(#ccc, 20%);
-      }
     }
   }
+  // .dropdown-menu {
+  //   left: 0;
+  //   margin-top: 0;
+  //   .dropdown-item {
+  //     padding: 3px 1.5rem;
+  //     color: #000;
 
-  .dropdown-menu {
-    left: 0;
-    margin-top: 0;
-    .dropdown-item {
-      padding: 3px 1.5rem;
-      color: #000;
+  //     @include hover-focus {
+  //       color: #000;
+  //       text-decoration: none;
+  //       background-color: transparent;
+  //     }
 
-      @include hover-focus {
-        color: #000;
-        text-decoration: none;
-        background-color: transparent;
-      }
-
-      &.active {
-        @include plain-hover-focus {
-          color: #000;
-          text-decoration: none;
-          background-color: #ddd;
-        }
-      }
-    }
-  }
-
+  //     &.active {
+  //       @include plain-hover-focus {
+  //         color: #000;
+  //         text-decoration: none;
+  //         background-color: #ddd;
+  //       }
+  //     }
+  //   }
+  // }
   &.non-responsive {
     .navbar-nav {
       -webkit-box-orient: horizontal;
@@ -102,7 +86,6 @@ Tags: Start, Start-Theme, Developers-Theme, Creative-Developers, Bootstrap, Scss
       display: none;
     }
   }
-
 }
 
 // /* Sides */
