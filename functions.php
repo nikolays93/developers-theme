@@ -73,14 +73,14 @@ function add_theme_assets() {
 
 	wp_enqueue_script('script', $tpl_uri . '/assets/script.js', array('jquery'), '1.0', true);
 
-	$style = '/style.min.css';
 	$style_cache = get_option('scss_cache');
 	$style_ver = $style_cache ? $style_cache : '1.0';
-	if( !is_wp_debug() && is_readable(get_template_directory() . $style) ){
-		wp_enqueue_style( 'style', get_template_directory_uri() . $style, array(), $style_ver, 'all' );
-	}
-	else {
-		wp_enqueue_style( 'style', get_template_directory_uri() . $style, array(), $style_ver, 'all' );
+
+	$styles = array('/style.min.css', '/style.css');
+	foreach ($styles as $style) {
+		if( is_readable(get_template_directory() . $style) ){
+			wp_enqueue_style( 'style', get_template_directory_uri() . $style, array(), $style_ver, 'all' );
+		}
 	}
 }
 add_action( 'wp_enqueue_scripts', 'add_theme_assets', 999 );
