@@ -26,18 +26,12 @@ get_header( 'shop' ); ?>
 		?>
 		<div id="archive-primary" class="<?=$primary_class; ?>">
 			<main id="main" class="woocommerce" role="main">
-				<?php $class = 'col-3'; ?>
-				<article id="post-<?php the_ID(); ?>" <?php post_class($class); ?>>
-					<a class="<?=$class?>-left" href="<?php the_permalink();?>"><?php the_post_thumbnail(); ?></a>
-					<div class="<?=$class?>-body">
-						<?php if ( apply_filters( 'woocommerce_show_page_title', false ) ) : ?>
-							<h1 class="page-title"><?php woocommerce_page_title(); ?></h1>
-						<?php elseif ( apply_filters( 'woocommerce_show_archive_title', true ) ) :?>
-							<?php the_advanced_archive_title(); ?>
-						<?php endif; ?>
-						<?php // the_content('<span class="more meta-nav">Подробнее</span>'); ?>
-					</div>
-				</article>
+				<?php if ( apply_filters( 'woocommerce_show_page_title', false ) ) : ?>
+					<h1 class="page-title"><?php woocommerce_page_title(); ?></h1>
+				<?php elseif ( apply_filters( 'woocommerce_show_archive_title', true ) ) :?>
+					<?php the_advanced_archive_title(); ?>
+				<?php endif; ?>
+				
 				<?php if ( have_posts() ) : ?>
 					<?php
 						/**
