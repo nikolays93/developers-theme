@@ -259,15 +259,11 @@ new themeCustomizer();
 
 // [our_address], [our_numbers], [our_email], [our_time_work], [our_socials] - for easy use
 function get_company_info( $field, $filter = 'the_content' ){
-  if(! $field )
-    return false;
-
   $info = get_theme_mod( 'company_' . $field );
-  if( ! $info )
-    return false;
-
-  if( $filter )
-    return apply_filters( $filter, $info);
+  if($filter == 'the_content')
+    return str_replace( ']]>', ']]&gt;', wpautop(wptexturize( $info )) );
+  elseif( $filter )
+    return apply_filters( $filter, $info );
 
   return $info;
 }
@@ -283,12 +279,14 @@ function get_company_first_number( $del = ',', $num=0, $filter = 'the_content' )
   if(! $filter || $filter != false) $filter = 'the_content';
 
   $numbers = get_company_info('numbers', false);
-  $number = explode($del, $numbers);
+  $info = explode($del, $numbers);
   
-  if($filter)
-    return apply_filters( 'the_content', $number[$num] );
+  if($filter == 'the_content')
+    return str_replace( ']]>', ']]&gt;', wpautop(wptexturize( $info[$num] )) );
+  elseif( $filter )
+    return apply_filters( $filter, $info[$num] );
 
-  return $number[$num];
+  return $info[$num];
 }
 add_shortcode('our_address', 'get_company_address');
 add_shortcode('our_numbers', 'get_company_numbers');
