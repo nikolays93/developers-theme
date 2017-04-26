@@ -56,8 +56,8 @@ function the_advanced_title( $post_id = null, $args = array() ){
 }
 
 /**
- * Получить заголовок архива (отличие от стандартной функции:
- * не выводит "Категория:" или "Архивы:" )
+ * Получить заголовок архива (отличается от стандартной функции отсутствием мультиязычности
+ * и не выводит "Категория:", "Ярлык:", "Автор:", "Архивы:" )
  */
 function get_advanced_archive_title() {
   if ( is_category() ) {
@@ -65,13 +65,13 @@ function get_advanced_archive_title() {
   } elseif ( is_tag() ) {
     $title = single_tag_title( '', false );
   } elseif ( is_author() ) {
-    $title = sprintf( __( 'Автор: %s' ), '<span class="vcard">' . get_the_author() . '</span>' );
+    $title = '<span class="vcard">' . get_the_author() . '</span>';
   } elseif ( is_year() ) {
-    $title = sprintf( __( 'Записи за %s год' ), get_the_date( _x( 'Y', 'yearly archives date format' ) ) );
+    $title = sprintf( 'Записи за %s год', get_the_date( _x( 'Y', 'yearly archives date format' ) ) );
   } elseif ( is_month() ) {
-    $title = sprintf( __( 'Записи за %s месяц' ), get_the_date( _x( 'F Y', 'monthly archives date format' ) ) );
+    $title = sprintf( 'Записи за %s месяц', get_the_date( _x( 'F Y', 'monthly archives date format' ) ) );
   } elseif ( is_day() ) {
-    $title = sprintf( __( 'Записи за %s день' ), get_the_date( _x( 'F j, Y', 'daily archives date format' ) ) );
+    $title = sprintf( 'Записи за %s день', get_the_date( _x( 'F j, Y', 'daily archives date format' ) ) );
   } elseif ( is_tax( 'post_format' ) ) {
     if ( is_tax( 'post_format', 'post-format-aside' ) ) {
       $title = _x( 'Asides', 'post format archive title' );
@@ -93,11 +93,8 @@ function get_advanced_archive_title() {
       $title = _x( 'Chats', 'post format archive title' );
     }
   } elseif ( is_post_type_archive() ) {
-    $title = post_type_archive_title( '', false );
+    $title = apply_filters( 'archive_'.get_post_type().'_title', post_type_archive_title( '', false ) );
   } elseif ( is_tax() ) {
-    // $tax = get_taxonomy( get_queried_object()->taxonomy );
-    /* translators: 1: Taxonomy singular name, 2: Current taxonomy term */
-    // $title = sprintf( __( '%1$s: %2$s' ), $tax->labels->singular_name, single_term_title( '', false ) );
     $title = single_term_title( '', false );
   } else {
     $title = __( 'Archives' );
