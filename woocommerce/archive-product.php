@@ -25,7 +25,7 @@ get_header( 'shop' ); ?>
 		}
 		?>
 		<div id="archive-primary" class="<?=$primary_class; ?>">
-			<main id="main" class="woocommerce" role="main">
+			<main id="main" class="woocommerce main content" role="main">
 				<?php if ( apply_filters( 'woocommerce_show_page_title', false ) ) : ?>
 					<h1 class="page-title"><?php woocommerce_page_title(); ?></h1>
 				<?php elseif ( apply_filters( 'woocommerce_show_archive_title', true ) ) :?>

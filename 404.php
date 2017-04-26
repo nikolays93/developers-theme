@@ -13,7 +13,7 @@ $primary_class = "col-12";
 		}
 		?>
 		<div id="primary" class="<?php echo $primary_class; ?>">
-			<main id="main" role="main">
+			<main id="main" class="404 content" role="main">
 				<article class="error-404 not-found">
 					<?php the_advanced_title( '', '', array('title_tag' => 'h1')); ?>
 					<div class="error-content entry-content">

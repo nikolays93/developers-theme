@@ -17,7 +17,7 @@ if($type == 'post')
 		}
 		?>
 		<div id="primary" class="<?php echo $primary_class; ?>">
-			<main id="main" role="main">
+			<main id="main" class="single content" role="main">
 			<?php
 				get_tpl_content( $affix );
 				

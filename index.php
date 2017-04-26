@@ -19,7 +19,7 @@
 		}
 		?>
 		<div id="primary" class="<?php echo $primary_class; ?>">
-			<main id="main" role="main">
+			<main id="main" class="main content" role="main">
 			<?php
 				if ( have_posts() ){
 					if( is_search() ){
