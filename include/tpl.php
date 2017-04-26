@@ -1,27 +1,16 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) )    exit; // Exit if accessed directly
-
-if(is_wp_debug() || current_user_can( 'edit_theme_options' ) ){
-  function _dump(&$var){
-
-  if( empty($var) )
-    print_r('var is empty');
-    
-    echo '<pre>';
-    print_r($var);
-    echo '</pre>';
-  }
-} else {
-  function _dump(){
-    return false;
-  }
-}
-function _d(&$var){ _dump($var); }
+if ( ! defined( 'ABSPATH' ) )
+  exit; // Exit if accessed directly
 
 function get_tpl_content( $affix, $return = false ){
+  $singular = is_singular();
+
   if($return)
     ob_start();
+
+  if (!$singular)
+    echo "<div class='row'>";
 
   while ( have_posts() ){
     the_post();
@@ -33,6 +22,9 @@ function get_tpl_content( $affix, $return = false ){
     if( $affix != 'product' )
       get_template_part( 'template-parts/content', $affix );
   }
+
+  if (!$singular)
+    echo "</div>";
 
   if($return)
     return ob_get_clean();
