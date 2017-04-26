@@ -15,7 +15,7 @@ $primary_class = "col-12";
 		<div id="primary" class="<?php echo $primary_class; ?>">
 			<main id="main" class="404 content" role="main">
 				<article class="error-404 not-found">
-					<?php the_advanced_title( '', '', array('title_tag' => 'h1')); ?>
+					<?php the_advanced_title(null, array('title_tag' => 'h1')); ?>
 					<div class="error-content entry-content">
 						<p>К сожалению эта страница не найдена или не доступна. Попробуйте зайти позднее или воспользуйтесь главным меню для перехода по основным страницам.</p>
 					</div><!-- .entry-content -->
