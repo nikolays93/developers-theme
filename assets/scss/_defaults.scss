@@ -39,12 +39,9 @@
   background-image: -webkit-linear-gradient($direction, $colors); 
   background-image: linear-gradient($direction, $colors); 
 }
-@mixin transparent-sticky(){
-	.sticky-wrapper.is-sticky>div { opacity: 0.8; }
-	.sticky-wrapper.is-sticky>div:hover { opacity: 1; }
-	.sticky-wrapper>div { opacity: 1;transition: 0.5s ease;}
-}
-// @include transparent-sticky();
+// .sticky-wrapper.is-sticky>div { opacity: 0.8; }
+// .sticky-wrapper.is-sticky>div:hover { opacity: 1; }
+// .sticky-wrapper>div { opacity: 1;transition: 0.5s ease;}
 
 // /* Alignments (WP required) */
 .alignleft, .al {
@@ -79,7 +76,7 @@
   h1,h2,h3,h4,h5,h6 {
     color: $brand-primary;
     margin-top: 20px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
   }
 } 
 
@@ -90,7 +87,6 @@ img.full { max-width: auto !important; }
 .clear-list { @include clear-list('40px'); }
 ul.row { @include clear-list(0); }
 .hidden { display: none; }
-.no-underline { @include plain-hover-focus(){ text-decoration: none; } }
 .fll { float: left; }
 .flr { float: right; }
 .mt0  { margin-top:     0px !important; }
@@ -145,15 +141,15 @@ input[type="number"]{
 @media (min-width: 1200px){
   // small containers
   .sm {
-    padding-left: 90px;
-    padding-right: 90px;
+    padding-left: 90px !important;
+    padding-right: 90px !important;
   }
   .sm.left {
-    padding-left: 0px;
-    padding-right: 180px;
+    padding-left: 0px !important;
+    padding-right: 180px !important;
   }
   .sm.right {
-    padding-left: 180px;
-    padding-right: 0px;
+    padding-left: 180px !important;
+    padding-right: 0px !important;
   }
 }
