@@ -54,28 +54,6 @@ class themeCustomizer {
         )
       );
 
-    $wp_customize->add_setting('use_bootstrap', array('default'   => ''));
-    $wp_customize->add_control(
-      'use_bootstrap',
-      array(
-        'section'  => 'display_options',
-        'label'    => 'Подключить Bootstrap стили',
-        'description' => '',
-        'type'     => 'checkbox',
-        )
-      );
-
-    $wp_customize->add_setting('use_bootstrap_js', array('default'   => ''));
-    $wp_customize->add_control(
-      'use_bootstrap_js',
-      array(
-        'section'  => 'display_options',
-        'label'    => 'Использовать Bootstrap скрипты',
-        'description' => '',
-        'type'     => 'checkbox',
-        )
-      );
-
     $wp_customize->add_setting('allow_click', array('default'   => ''));
     $wp_customize->add_control(
       'allow_click',
