@@ -10,14 +10,16 @@ function add_theme_assets() {
 	wp_enqueue_script('jquery');
 
 	wp_enqueue_script('script', $tpl_uri . '/assets/script.js', array('jquery'), '1.0', true);
+	wp_enqueue_script('data-actions', $tpl_uri . '/assets/jquery.data-actions/jquery.data-actions'.$suffix.'.js', array('jquery'), '1.0', true);
 
 	$style_cache = get_option('scss_cache');
 	$style_ver = $style_cache ? $style_cache : '1.0';
 
-	$styles = array('/style.min.css', '/style.css');
+	$styles = array('/style'.$suffix.'.css', '/style.css');
 	foreach ($styles as $style) {
 		if( is_readable(get_template_directory() . $style) ){
 			wp_enqueue_style( 'style', get_template_directory_uri() . $style, array(), $style_ver, 'all' );
+			break;
 		}
 	}
 }

@@ -29,7 +29,7 @@ function get_advanced_title( $post_id = null, $args = array() ){
    */
   $edit_link = get_edit_post_link($post_id);
   $edit_attrs = ' class=\'dashicons dashicons-welcome-write-blog no-underline\'';
-  $edit_tpl = " <object><a style='position: absolute;' href='{$edit_link}'{$edit_attrs}></a></object>";
+  $edit_tpl = " <object><a href='{$edit_link}'{$edit_attrs}></a></object>";
 
   /**
    * Get Title Template

@@ -24,9 +24,9 @@ Tags: Start, Start-Theme, Developers-Theme, Creative-Developers, Bootstrap, Scss
 // * Woocommerce
 // * Content */
 
-
 // /* Imports  be care - its not compass */
-// @import "easy-bootstrap.scss";
+@import "easy-bootstrap/easy-bootstrap.scss";
+
 
 // /* Header */
 
@@ -35,13 +35,16 @@ Tags: Start, Start-Theme, Developers-Theme, Creative-Developers, Bootstrap, Scss
   width: 100%; // /* sticky fix */
   background-color: #ccc;
   margin-bottom: 20px;
-  padding: 0;
-  border-radius: 0;
+  .navbar {
+    padding: 0;
+    border-radius: 0;
+  }
   .navbar-nav {
     .nav-link {
       padding: 10px 15px;
-      @include plain-hover-focus() {
+      &, &:hover, &:focus {
         color: #000;
+        text-decoration: none;
       }
     }
     .current-menu-ancestor > .nav-link,
@@ -59,7 +62,7 @@ Tags: Start, Start-Theme, Developers-Theme, Creative-Developers, Bootstrap, Scss
       flex-direction: row;
     }
     .navbar-brand {
-      display: none;
+      display: none !important;
     }
   }
 }
@@ -114,7 +117,7 @@ Tags: Start, Start-Theme, Developers-Theme, Creative-Developers, Bootstrap, Scss
   }
   
   .card > a, .card-block > a:first-child {
-    @include plain-hover-focus() {
+    &, &:hover, &:focus {
       text-decoration: none;
       color: #000;
     }
