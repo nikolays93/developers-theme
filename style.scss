@@ -25,10 +25,8 @@ Tags: Start, Start-Theme, Developers-Theme, Creative-Developers, Bootstrap, Scss
 // * Content */
 
 
-// /* Imports  be care - its not compass (Укажите полный путь до файла) */
-@import "bs4scss/_mixins.scss";
-@import "bs4scss/_custom.scss";
-@import "_defaults.scss";
+// /* Imports  be care - its not compass */
+// @import "easy-bootstrap.scss";
 
 // /* Header */
 
@@ -52,28 +50,6 @@ Tags: Start, Start-Theme, Developers-Theme, Creative-Developers, Bootstrap, Scss
 
     }
   }
-  // .dropdown-menu {
-  //   left: 0;
-  //   margin-top: 0;
-  //   .dropdown-item {
-  //     padding: 3px 1.5rem;
-  //     color: #000;
-
-  //     @include hover-focus {
-  //       color: #000;
-  //       text-decoration: none;
-  //       background-color: transparent;
-  //     }
-
-  //     &.active {
-  //       @include plain-hover-focus {
-  //         color: #000;
-  //         text-decoration: none;
-  //         background-color: #ddd;
-  //       }
-  //     }
-  //   }
-  // }
   &.non-responsive {
     .navbar-nav {
       -webkit-box-orient: horizontal;
@@ -91,6 +67,15 @@ Tags: Start, Start-Theme, Developers-Theme, Creative-Developers, Bootstrap, Scss
 // /* Sides */
 
 // /* Posts and pages */
+.content {
+  min-height: 450px;
+  .media-body { max-width: 100%; }
+  h1,h2,h3,h4,h5,h6 {
+    color: $brand-primary;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+}
 
 // /* Footer */
 
@@ -160,3 +145,10 @@ Tags: Start, Start-Theme, Developers-Theme, Creative-Developers, Bootstrap, Scss
   }
 }
 // /* Content */
+.custom.modal .close {
+  right: 5px;
+  top: 5px;
+  width: 20px;
+  position: absolute;
+  z-index: 55;
+}

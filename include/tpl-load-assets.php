@@ -9,15 +9,6 @@ function add_theme_assets() {
   	// wp_register_script( 'jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js');
 	wp_enqueue_script('jquery');
 
-	if ( get_theme_mod( 'use_bootstrap' ) ){
-		wp_enqueue_style('bootstrap4',  $tpl_uri . '/assets/bootstrap.css', array(), '4.0alpha6');
-	}
-
-	if ( get_theme_mod( 'use_bootstrap_js' ) ){
-		wp_enqueue_script('Tether', 'https://www.atlasestateagents.co.uk/javascript/tether.min.js', array(), null, true);
-		wp_enqueue_script('bootstrap4-script', $tpl_uri . '/assets/js/bootstrap'.$suffix.'.js', array('jquery'), '4.0alpha6', true);
-	}
-
 	wp_enqueue_script('script', $tpl_uri . '/assets/script.js', array('jquery'), '1.0', true);
 
 	$style_cache = get_option('scss_cache');
