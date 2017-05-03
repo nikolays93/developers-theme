@@ -43,9 +43,9 @@ class themeCustomizer {
         )
       );
 
-    $wp_customize->add_setting('site-mode', array('default'   => false));
+    $wp_customize->add_setting('responsive', array('default'   => false));
     $wp_customize->add_control(
-      'site-mode',
+      'responsive',
       array(
         'section'  => 'display_options',
         'label'    => 'Адаптивный шаблон',

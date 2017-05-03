@@ -5,11 +5,11 @@ function default_theme_nav(
   $toggler = '' ){
   
   if( get_theme_mod( 'responsive' ) ){
-    $container = array( '<nav class="navbar navbar-default navbar-toggleable-md navbar-light">', '</nav>' );
-    $args['container_class'] .= ' collapse navbar-collapse navbar-responsive-collapse';
+    $container = array( '<section class="navbar-default"><nav class="container navbar navbar-toggleable-md">', '</nav></section>' );
+    $args['container_class'] = 'collapse navbar-collapse navbar-responsive-collapse';
     $args['container_id'] = 'default-collapse';
     $toggler = '
-    <button class="navbar-toggler navbar-toggler-left" type="button" data-toggle="collapse" data-target="#default-collapse" aria-controls="default-collapse" aria-expanded="false">
+    <button class="navbar-toggler navbar-toggler-left" type="button" data-hide="#default-collapse">
       <span class="navbar-toggler-icon"></span>
     </button>';
   }
