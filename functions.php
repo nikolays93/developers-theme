@@ -1,39 +1,28 @@
 <?php
 /*
- * Debug функции
  * Добавление поддержки функций
  * Добавление областей 'primary', 'footer'
  * Регистрация Сайдбара: Архивы и записи
- * Загрузка фалов дополнительных функций
  * Фильтры шаблона
  */
-if(!function_exists('is_wp_debug')){
-  function is_wp_debug(){
-    if( WP_DEBUG ){
-      if( defined(WP_DEBUG_DISPLAY) && ! WP_DEBUG_DISPLAY){
-        return false;
-      }
-      return true;
-    }
-    return false;
-  }
-}
-if(!function_exists('_debug')){
-  if( is_wp_debug() || current_user_can( 'activate_plugins' ) ){
-    function _debug( &$var, $var_dump = false ){
-      echo "<pre>";
-      if($var_dump)
-        print_r( $var );
-      else
-        var_dump( $var );
-      echo "</pre>";
-    }
-  } else {
-    function _debug( &$var, $var_dump = false ){
-      return false;
-    }
-  }
-}
+
+/**
+ * Include required files
+ */
+$tpl_uri = get_template_directory();
+
+require_once $tpl_uri . '/include/debugger.php';       // * Debug функции
+require_once $tpl_uri . '/include/tpl-view-settings.php';
+require_once $tpl_uri . '/include/tpl-company-info.php';
+
+require_once $tpl_uri . '/include/tpl.php';
+require_once $tpl_uri . '/include/tpl-titles.php';     // * Шаблоны заголовков
+require_once $tpl_uri . '/include/tpl-bootstrap.php';  // * Вспомагателные bootstrap функции
+require_once $tpl_uri . '/include/tpl-gallery.php';    // * Шаблон встроенной галереи wordpress
+require_once $tpl_uri . '/include/tpl-navigation.php'; // * Шаблон навигации
+
+if(function_exists('is_woocommerce'))
+  require_once $tpl_uri . '/include/functions-woocommerce.php';
 
 function theme_setup() {
   // load_theme_textdomain( 'seo18theme', get_template_directory() . '/assets/languages' );
@@ -69,26 +58,39 @@ function archive_widgets_init(){
 }
 add_action( 'widgets_init', 'archive_widgets_init' );
 
-/**
- * Include required files
- */
-$tpl_uri = get_template_directory();
+function _theme_styles_and_scripts() {
+  $tpl_uri = get_template_directory_uri();
+  $suffix = (!is_wp_debug()) ? '.min' : ''; 
 
-require_once $tpl_uri . '/include/customizer.php';
-require_once $tpl_uri . '/include/functions-custom.php';
+  /**
+   * Enqueue Style CSS or SASS/SCSS (if exists)
+   */
+  $ver = get_option('scss_cache') ? get_option('scss_cache') : '1.0';
+  $styles = array('/style'.$suffix.'.css', '/style.css');
+  foreach ($styles as $style) {
+    if( is_readable(get_template_directory() . $style) ){
+      wp_enqueue_style( 'style', $tpl_uri . $style, array(), $ver, 'all' );
+      break;
+    }
+  }
 
-require_once $tpl_uri . '/include/tpl.php';
-require_once $tpl_uri . '/include/tpl-load-assets.php'; // * Подключение стандартных скриптов / стилей
-require_once $tpl_uri . '/include/tpl-titles.php';    // * Шаблоны заголовков
-require_once $tpl_uri . '/include/tpl-bootstrap.php';   // * Вспомагателные bootstrap функции
-require_once $tpl_uri . '/include/tpl-gallery.php';   // * Шаблон встроенной галереи wordpress
-require_once $tpl_uri . '/include/tpl-navigation.php';  // * Шаблон навигации
+  // wp_deregister_script( 'jquery' );
+    // wp_register_script( 'jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js');
+  wp_enqueue_script('jquery');
+  
+  wp_enqueue_script('data-actions', $tpl_uri . '/assets/jquery.data-actions/jquery.data-actions'.$suffix.'.js', array('jquery'), '1.0', true);
+  wp_enqueue_script('script', $tpl_uri . '/assets/script.js', array('jquery'), '1.0', true);
+}
+add_action( 'wp_enqueue_scripts', '_theme_styles_and_scripts', 999 );
 
-if(function_exists('is_woocommerce'))
-  require_once $tpl_uri . '/include/functions-woocommerce.php';
-
-/**
- * template filters
- */
-// example :
+//
+// template filters:
+//
 // add_filter( 'archive_reviews_title', function($t){ return 'Отзывы наших покупателей'; } );
+
+// if(class_exists('WPAdvancedPostType')){
+//  $types = new WPAdvancedPostType();
+//  $types -> add_type( 'enty', 'Entity', 'Entities', array('public'=>false) );
+//  $types -> add_type( 'news', 'News');
+//  $types -> reg_types();
+// }
