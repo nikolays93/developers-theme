@@ -13,7 +13,8 @@ if(!function_exists('is_wp_debug')){
 if(!function_exists('_debug')){
   if( is_wp_debug() || current_user_can( 'activate_plugins' ) ){
     function _debug( &$var, $var_dump = false ){
-      echo "<pre>";
+      $style = is_admin() ? " style='max-width: 960px;margin: 0 auto;'" : '';
+      echo "<pre{$style}>";      
       if($var_dump)
         print_r( $var );
       else

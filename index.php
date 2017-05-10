@@ -51,5 +51,33 @@
 		</div><!-- #primary -->
 	</div><!-- .row -->
 </div><!-- .container -->
+
+<a href="#" data-fade-IN="#myModal">Show modal!</a>
+
+<span data-target="html, body" data-action="toggleClass" data-props="'modal-open'"> BODY!</span>
+
+<!-- Modal -->
+<div class="modal hidden" id="myModal" tabindex="-1" aria-hidden="true" data-wrapper="only" data-fade-Out="<< .modal">
+  <div class="modal-dialog centered">
+    <div class="modal-content">
+    	<div class="modal-body">
+    		<button type="button" class="close" data-fade-Out="<< .modal">&times;</button>
+    		Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+    		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+    		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+    		consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+    		cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+    		proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    		Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+    		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+    		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+    		consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+    		cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+    		proident, sunt in culpa qui officia deserunt mollit anim id est laborum.    		
+    	</div>
+    </div>
+  </div>
+</div>
+
 <?php
 get_footer();

@@ -431,7 +431,7 @@ abbr[title], abbr[data-original-title] {
   cursor: help; }
 
 .hidden, [hidden] {
-  display: none !important; }
+  display: none; }
 
 a, area, button, [role="button"], input, label, select, summary, textarea {
   touch-action: manipulation; }
@@ -439,6 +439,9 @@ a, area, button, [role="button"], input, label, select, summary, textarea {
 .clearfix::after {
   display: block;
   content: "";
+  clear: both; }
+
+.first {
   clear: both; }
 
 a {
@@ -1741,7 +1744,7 @@ a.btn.disabled, fieldset[disabled] a.btn {
 
 .close {
   float: right;
-  font-size: 1.5rem;
+  font-size: 24px;
   font-weight: bold;
   line-height: 1;
   color: #000;
@@ -1769,14 +1772,15 @@ button.close {
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: ;
+  z-index: 551;
   display: none;
   overflow: hidden;
-  outline: 0; }
+  outline: 0;
+  background: rgba(0, 0, 0, 0.7); }
   .modal.fade .modal-dialog {
     transition: transform 0.3s ease-out;
     transform: translate(0, -25%); }
-  .modal.show .modal-dialog {
+  .modal.show .modal-dialog, .modal.in .modal-dialog {
     transform: translate(0, 0); }
 
 .modal-open .modal {
@@ -1787,12 +1791,18 @@ button.close {
   position: relative;
   width: auto;
   margin: 10px; }
+  .modal-dialog.centered {
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -40%);
+    margin: 0; }
 
 .modal-content {
   position: relative;
   display: flex;
   flex-direction: column;
-  background-color: ;
+  background-color: #fff;
   background-clip: padding-box;
   border:  solid rgba(0, 0, 0, );
   border-radius: 8px;
@@ -1805,11 +1815,11 @@ button.close {
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: ;
-  background-color: ; }
+  z-index: 550;
+  background-color: #000; }
   .modal-backdrop.fade {
     opacity: 0; }
-  .modal-backdrop.show {
+  .modal-backdrop.show, .modal-backdrop.in {
     opacity: 0.5; }
 
 .modal-header {
@@ -1827,6 +1837,10 @@ button.close {
   position: relative;
   flex: 1 1 auto;
   padding: 15px; }
+  .modal-body .close {
+    position: absolute;
+    right: 5px;
+    top: 0; }
 
 .modal-footer {
   display: flex;
@@ -1850,6 +1864,8 @@ button.close {
   .modal-dialog {
     max-width: 500px;
     margin: 30px auto; }
+    .modal-dialog.centered {
+      margin: 0; }
 
   .modal-content {
     -webkit-box-shadow: 0 5px 15px rgba(0, 1, 0, ) 2px 5px rgba(0, 0, 0, .4);
